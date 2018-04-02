@@ -34,5 +34,13 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Cryptocurrency": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Industry": {
+    "dataSource": "db",
+    "public": true
   }
 }

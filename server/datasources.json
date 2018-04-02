@@ -5,7 +5,7 @@
     "url": "",
     "database": "cryptocat",
     "password": "",
-    "name": "mongoDs",
+    "name": "db",
     "user": "",
     "connector": "mongodb"
   }
