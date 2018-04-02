@@ -1,0 +1,53 @@
+{
+  "name": "Cryptocurrency",
+  "plural": "Cryptocurrencies",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "symbol": {
+      "type": "string",
+      "required": true
+    },
+    "shortDesc": {
+      "type": "string"
+    },
+    "fullDesc": {
+      "type": "string"
+    },
+    "industries": {
+      "type": [
+        "Industry"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "scanCryptos": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "cryptocompareResponse",
+          "type": "string",
+          "root": false,
+          "description": "JSON response containing all the coins from the cryptocompare API."
+        }
+      ],
+      "description": "Scans an API for new Cryptos and adds them to our datasource.",
+      "http": [
+        {
+          "path": "/scan-cryptos",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}
