@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import CryptocurrencyItem from './CryptocurrencyItem'
 class Cryptocurrencies extends Component{
 
@@ -27,20 +26,26 @@ class Cryptocurrencies extends Component{
 	}
 
 	render(){
-		const cCount = this.state.cryptocurrencies.length
+
+		const coinCount = this.state.cryptocurrencies.length
 		const cryptocurrencyItems = this.state.cryptocurrencies.map( (cryptocurrency, i) => {
 			return (
 				<CryptocurrencyItem key={cryptocurrency.id} item={cryptocurrency}/>	
 			)
+
 		})
 
 		return (
 			<div>
 			  <header>
-					<h1>{cCount} tradable cryptocurrencies</h1>
-					<ul>
-					{cryptocurrencyItems}
-					</ul>
+					<h1>{coinCount} tradable cryptocurrencies</h1>
+					<table>
+					  <thead>
+					  </thead>
+					  <tbody>
+	  					{cryptocurrencyItems}
+					  </tbody>
+					 </table>
 				</header>
 			</div>
 		)

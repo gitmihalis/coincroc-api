@@ -51,10 +51,7 @@ module.exports = function(Cryptocurrency) {
 			); 
 
 		}
-		
-
-
-
+	
 		// console.log(result);
 		next();
 	})	
