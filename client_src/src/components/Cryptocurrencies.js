@@ -62,8 +62,6 @@ class Cryptocurrencies extends Component{
 					  		<th>Symbol</th>
 					  		<th>Price(USD)<i></i></th>
 					  		<th>24hr chang.</th>
-					  		<th>24hr vol.</th>
-					  		<th>Market cap</th>
 					  		<th>Industry</th>
 					  	</tr>
 					  </thead>

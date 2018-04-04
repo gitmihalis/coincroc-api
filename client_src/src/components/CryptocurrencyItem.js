@@ -35,9 +35,7 @@ const CryptocurrencyItem = (props) => {
 	const item = props.item
 		// TODO convert to CAD
 	let 
-	priceUSD = item['price_usd'] ? $round(item['price_usd']) : '?',
-	marketCapUSD = item['market_cap_usd'] ? $round(item['market_cap_usd']) : '?',
-	volume24hrs = item['24h_volume_usd'] ? $round(item['24h_volume_usd']) : '?',
+	priceUSD = item['price_usd'] ? '$'+ $round(item['price_usd']) : '?',
 	percentChange24HR = item['percent_change_24h'] ? item['percent_change_24h'] : '?'
 
 	return (
@@ -46,8 +44,6 @@ const CryptocurrencyItem = (props) => {
       	<td>{item.symbol}</td>
       	<td>{priceUSD}</td>
       	<td>{percentChange24HR + '%'}</td>
-      	<td>{volume24hrs}</td>
-      	<td>{marketCapUSD}</td>
       	<td>{`Category`}</td>
       </tr>
 	)
