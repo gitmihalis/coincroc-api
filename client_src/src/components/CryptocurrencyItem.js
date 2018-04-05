@@ -39,13 +39,28 @@ const CryptocurrencyItem = (props) => {
 	percentChange24HR = item['percent_change_24h'] ? item['percent_change_24h'] : '?'
 
 	return (
-      <tr>
-      	<td><Link to={`/cryptocurrencies/${item.id}`}>{item.name}</Link></td>
-      	<td>{item.symbol}</td>
-      	<td>{priceUSD}</td>
-      	<td>{percentChange24HR + '%'}</td>
-      	<td>{`Category`}</td>
-      </tr>
+      <li>
+
+      	<div className="grid-container">
+				  <div className="grid-x grid-margin-x">
+				    <div className="cell small-3">
+				    	<div>
+				    		<Link to={`/cryptocurrencies/${item.id}`}>{item.name}</Link>
+	    		      <div>{item.symbol}</div>
+				    	</div>
+				    </div>
+				    <div className="cell small-3">
+				    	<div>{percentChange24HR + '%'}</div>
+				    </div>
+				    <div className="cell small-3">
+				    	<div>{priceUSD}</div>
+				    </div>				    
+				    <div className="cell small-3">
+				    	<div className="text-right">{`Category`}</div>
+				    </div>
+				  </div>
+				</div>
+      </li>
 	)
 }
 

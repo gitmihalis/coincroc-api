@@ -7,8 +7,6 @@ const Main = () => (
 	<Switch>
 		<Route exact path="/" component={Cryptocurrencies}/>
 		<Route exact path="/cryptocurrencies/edit/:id" component={EditCryptocurrency}/>
-
-		{/*<Route exact path="/cryptocurrencies/:id" component={Cryptocurrency}/>*/}
 	</Switch>
 )
 
