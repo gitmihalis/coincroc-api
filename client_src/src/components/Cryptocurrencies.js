@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import CryptocurrencyItem from './CryptocurrencyItem'
 
-// name / sym / 24hr chang. / 24hr vol. / market cap/ 
-
 class Cryptocurrencies extends Component{
 
 	constructor(){
@@ -26,17 +24,6 @@ class Cryptocurrencies extends Component{
       })
 			.catch( err => console.error(err))
 	}
-
-	// getIndustries(cryptocurrencies){
-	// 	axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=0')
-	// 		.then(res -> {
-	// 			this.setState({ crypto})
-	// 		})
-		// foreach set of coinmarketcap,
-		//   hit the endpoint for multiple coin prices
-		//   https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD,EUR
-		//   	progressively place the results in the DOM 
-	// }
 
 	getInitialState(){
 
