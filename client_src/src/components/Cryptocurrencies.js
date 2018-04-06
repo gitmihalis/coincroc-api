@@ -47,15 +47,19 @@ class Cryptocurrencies extends Component{
 		})
 
 		return (
-			<div className="card">
-				<div>
-				<h5>Showing {coinCount} cryptocurrencies</h5>
+			<div className="row align-center">
+
+				<div className="card">
+					<div>
+					<h5>Showing {coinCount} cryptocurrencies</h5>
+					</div>
+					<div className="card-section">
+						<ul>
+		  			{cryptocurrencyItems}
+		  			</ul>
+		  		</div>
 				</div>
-				<div className="card-section">
-					<ul>
-	  			{cryptocurrencyItems}
-	  			</ul>
-	  		</div>
+				
 			</div>
 		)
 
