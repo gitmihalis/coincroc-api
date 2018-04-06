@@ -1,12 +1,16 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Cryptocurrencies from './Cryptocurrencies'
-import EditCryptocurrency from './EditCryptocurrency'
+import Cryptocurrency from './Cryptocurrency'
+import AddIndustryToCryptocurrency from './AddIndustryToCryptocurrency'
+import About from './About'
 
 const Main = () => (
 	<Switch>
 		<Route exact path="/" component={Cryptocurrencies}/>
-		<Route exact path="/cryptocurrencies/edit/:id" component={EditCryptocurrency}/>
+		<Route exact path="/about" component={About}/>
+		<Route exact path="/cryptocurrencies/:id" component={Cryptocurrency}/>
+		<Route exact path="/industry-cryptocurrency" component={AddIndustryToCryptocurrency}/>
 	</Switch>
 )
 

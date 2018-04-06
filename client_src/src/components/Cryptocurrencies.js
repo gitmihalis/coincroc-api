@@ -9,28 +9,30 @@ class Cryptocurrencies extends Component{
 		super()
 		this.state = {
 			cryptocurrencies: [],
+			tickerData: [],
 		}
 
 	}
 
 	componentWillMount(){
-		this.getCryptocurrencies()
+		this.getCryptocurrencies(100)
 	}
 
-	getCryptocurrencies(){
+	getCryptocurrencies(limit){
 		// TODO convert to CAD
-		axios.get('http://localhost:3000/api/cryptocurrencies')
+		axios.get('http://localhost:3000/api/cryptocurrencies?filter[limit]='+limit)
 			.then(res => {
 				this.setState({ cryptocurrencies: res.data }, () => console.log(this.state))
       })
 			.catch( err => console.error(err))
 	}
 
-	getCryptoStats(){
+
+	getTickerData(limit){
 		// TODO convert to CAD
-		axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=0')
+		axios.get('https://api.coinmarketcap.com/v1/ticker/?limit='+limit )
 			.then(res => {
-				this.setState({ cryptocurrencies: res.data }, () => console.log(this.state))
+				this.setState({ tickerData: res.data }, () => console.log(this.state))
       })
 			.catch( err => console.error(err))
 	}
@@ -46,6 +48,9 @@ class Cryptocurrencies extends Component{
 
 		return (
 			<div className="card">
+				<div>
+				<h5>Showing {coinCount} cryptocurrencies</h5>
+				</div>
 				<div className="card-section">
 					<ul>
 	  			{cryptocurrencyItems}

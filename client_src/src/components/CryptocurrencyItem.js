@@ -36,7 +36,15 @@ const CryptocurrencyItem = (props) => {
 		// TODO convert to CAD
 	let 
 	priceUSD = item['price_usd'] ? '$'+ $round(item['price_usd']) : '?',
-	percentChange24HR = item['percent_change_24h'] ? item['percent_change_24h'] : '?'
+	percentChange24HR = item['percent_change_24h'] ? item['percent_change_24h'] : '?',
+	industries = ''
+
+	if (item.industries) {
+		industries = 	item.industries.map((industry, i) => {
+			return industry.name
+		})
+	}
+
 
 	return (
       <li>
@@ -56,7 +64,7 @@ const CryptocurrencyItem = (props) => {
 				    	<div>{priceUSD}</div>
 				    </div>				    
 				    <div className="cell small-3">
-				    	<div className="text-right">{`Category`}</div>
+				    	<div className="text-right">{industries ? industries : 'unknown'}</div>
 				    </div>
 				  </div>
 				</div>
