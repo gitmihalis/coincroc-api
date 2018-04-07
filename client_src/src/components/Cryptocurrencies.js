@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Virtualized from 'react-virtualized'
 import CryptocurrencyItem from './CryptocurrencyItem'
 import './cryptocurrencies.css'
 
@@ -47,10 +48,10 @@ class Cryptocurrencies extends Component{
 		})
 
 		return (
-			<div className="row align-center">
+			<div className="grid-container">
 
 				<div className="card">
-					<div>
+					<div class="card-divider">
 					<h5>Showing {coinCount} cryptocurrencies</h5>
 					</div>
 					<div className="card-section">

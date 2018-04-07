@@ -49,7 +49,6 @@ const CryptocurrencyItem = (props) => {
 	return (
       <li>
 
-      	<div className="grid-container">
 				  <div className="grid-x grid-margin-x">
 				    <div className="cell small-3">
 				    	<div>
@@ -67,7 +66,7 @@ const CryptocurrencyItem = (props) => {
 				    	<div className="text-right">{industries ? industries : 'unknown'}</div>
 				    </div>
 				  </div>
-				</div>
+
       </li>
 	)
 }
