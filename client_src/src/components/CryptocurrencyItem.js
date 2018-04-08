@@ -47,23 +47,24 @@ const CryptocurrencyItem = (props) => {
 
 
 	return (
-	  <div>
-	    <div>
-	    	<div>
-	    		<Link to={`/cryptocurrencies/${cryptocurrency.id}`}>{cryptocurrency.name}</Link>
-		      <div>{cryptocurrency.symbol}</div>
+		<Link to={`/cryptocurrencies/${cryptocurrency.id}`}><div className="row">
+	    
+	      <div className="three columns">{cryptocurrency.name}
+	      </div>
+
+		    <div className="two columns">{cryptocurrency.symbol}
+		    </div>
+
+	    	<div className="two columns">{percentChange24HR + '%'}
 	    	</div>
-	    </div>
-	    <div>
-	    	<div>{percentChange24HR + '%'}</div>
-	    </div>
-	    <div>
-	    	<div>{priceUSD}</div>
-	    </div>				    
-	    <div>
-	    	<div>{industries ? industries : 'unknown'}</div>
-	    </div>
-	  </div>
+	    	
+	    	<div className="two columns">{priceUSD}
+	    	</div>
+	    	
+	    	<div className="three columns">{industries ? industries : 'unknown'}
+	    	</div>
+
+	  </div></Link>
 	)
 }
 

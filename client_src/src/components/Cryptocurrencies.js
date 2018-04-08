@@ -58,7 +58,9 @@ class Cryptocurrencies extends Component{
 		return (
 			<div>
 				<h5>Showing {cryptocurrencies.length} cryptocurrencies</h5>
-				{cryptocurrencies}
+				<div className="container">
+					{cryptocurrencies}
+				</div>
 			</div>
 		)
 
