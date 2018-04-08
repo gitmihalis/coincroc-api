@@ -17,7 +17,12 @@ class Cryptocurrencies extends Component{
 
 	componentWillMount(){
 		this.getCryptocurrencies(50)
-		.then(res=> this.recursiveGetData(res))
+		.then( (res) => {
+			return this.recursiveGetData(res)
+		})
+		.then( _ => {
+			return this.insertApiData() 
+		})
 		.catch(err => console.log(err))
 	}
 
@@ -25,18 +30,25 @@ class Cryptocurrencies extends Component{
 		let data = {}
 		let chunks = _array.chunk(symbols, 4)
 
-		chunks.forEach((chunk) => {
-			chunk = chunk.join(',').toUpperCase()
-			console.log(chunk)
+		return new Promise((resolve, reject) => {
 
-			axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${chunk}&tsyms=USD`)
-			.then(res => {
-				data = _object.merge(res.data.DISPLAY, data)
-				this.setState({apiData: data})
+			chunks.forEach((chunk, index) => {
+
+				chunk = chunk.join(',').toUpperCase()
+
+				axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${chunk}&tsyms=USD`)
+				.then(res => {
+					data = _object.merge(res.data.DISPLAY, data)
+					this.setState({apiData: data})
+
+					if (index === chunks.length - 1) {
+						console.log('finished recursiveGetData with state = ', this.state)
+						resolve()
+					}
+				})
+				.catch(err => reject(err))
 			})
-			.catch(err => console.error(err))
 		})
-			// slice the symbols out, make sure they are uppercase and join them with commas
 	}
 
 	getCryptocurrencies(limit){ // limit 0 = all
@@ -48,17 +60,51 @@ class Cryptocurrencies extends Component{
       })
 	}
 
+	insertApiData(dataObject) {
+		return console.log(dataObject)
+		// BTC: {
+		//   "FROMSYMBOL": "Ƀ",
+		//   "TOSYMBOL": "$",
+		//   "MARKET": "CryptoCompare Index",
+		//   "PRICE": "$ 7,018.76",
+		//   "LASTUPDATE": "Just now",
+		//   "LASTVOLUME": "Ƀ 0.4853",
+		//   "LASTVOLUMETO": "$ 3,383.47",
+		//   "LASTTRADEID": "1523206723.5702",
+		//   "VOLUMEDAY": "Ƀ 39,156.1",
+		//   "VOLUMEDAYTO": "$ 276,565,110.8",
+		//   "VOLUME24HOUR": "Ƀ 56,518.8",
+		//   "VOLUME24HOURTO": "$ 398,479,732.8",
+		//   "OPENDAY": "$ 6,917.20",
+		//   "HIGHDAY": "$ 7,132.03",
+		//   "LOWDAY": "$ 6,911.02",
+		//   "OPEN24HOUR": "$ 7,060.01",
+		//   "HIGH24HOUR": "$ 7,149.06",
+		//   "LOW24HOUR": "$ 6,887.05",
+		//   "LASTMARKET": "Kraken",
+		//   "CHANGE24HOUR": "$ -41.25",
+		//   "CHANGEPCT24HOUR": "-0.58",
+		//   "CHANGEDAY": "$ 101.56",
+		//   "CHANGEPCTDAY": "1.47",
+		//   "SUPPLY": "Ƀ 16,965,512.0",
+		//   "MKTCAP": "$ 119.08 B",
+		//   "TOTALVOLUME24H": "Ƀ 312.09 K",
+		//   "TOTALVOLUME24HTO": "$ 2,192.29 M"
+		// }
+	}
+
 
 	render(){
 		const cryptocurrencies = this.state.cryptocurrencies.map((crypto, i) => {
 			return <CryptocurrencyItem cryptocurrency={crypto} key={crypto.id} />
 		})
-		console.log('state.data is: ', this.state.apiData)
+
+		
 
 		return (
 			<div>
 				<h5>Showing {cryptocurrencies.length} cryptocurrencies</h5>
-				<div className="container">
+				<div className="container">				
 					{cryptocurrencies}
 				</div>
 			</div>

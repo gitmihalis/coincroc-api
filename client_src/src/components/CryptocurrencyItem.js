@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './cryptocurrency-item.css'
 
 /*
 Table column titles in Cryptocurrencies are: 
@@ -41,30 +42,37 @@ const CryptocurrencyItem = (props) => {
 
 	if (cryptocurrency.industries) {
 		industries = 	cryptocurrency.industries.map((industry, i) => {
-			return industry.name
+			return <span className="label" key={industry.id}>{industry.name}</span>
 		})
 	}
 
 
 	return (
-		<Link to={`/cryptocurrencies/${cryptocurrency.id}`}><div className="row">
+
+		<Link to={`/cryptocurrencies/${cryptocurrency.id}`}>
+		<div className="row cryptocurrency-item">
 	    
-	      <div className="three columns">{cryptocurrency.name}
+	      <div className="three columns">
+	      	<span className="currency-name">{cryptocurrency.name}</span>
 	      </div>
 
-		    <div className="two columns">{cryptocurrency.symbol}
+		    <div className="two columns">
+		    	<span className="currency-sybmbol">{cryptocurrency.symbol.toUpperCase()}</span>
 		    </div>
 
-	    	<div className="two columns">{percentChange24HR + '%'}
+	    	<div className="two columns">
+	    		<span className="percent-change">{percentChange24HR + '%'}</span>
 	    	</div>
 	    	
-	    	<div className="two columns">{priceUSD}
+	    	<div className="two columns ">
+	    	<span className="price-usd">{priceUSD}</span>
 	    	</div>
 	    	
-	    	<div className="three columns">{industries ? industries : 'unknown'}
+	    	<div className="three columns">
+	    		<div className="label-list">{industries ? industries : 'unknown'}</div>
 	    	</div>
-
-	  </div></Link>
+	    </div>
+	  </Link>
 	)
 }
 
