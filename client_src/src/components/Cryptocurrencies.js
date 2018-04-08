@@ -18,7 +18,7 @@ class Cryptocurrencies extends Component{
 	componentWillMount(){
 		this.getCryptocurrencies(50)
 		.then( (res) => {
-			return this.recursiveGetData(res)
+			return this.getManyApiData(res)
 		})
 		.then( _ => {
 			return this.insertApiData() 
@@ -26,7 +26,7 @@ class Cryptocurrencies extends Component{
 		.catch(err => console.log(err))
 	}
 
-	recursiveGetData(symbols){
+	getManyApiData(symbols){
 		let data = {}
 		let chunks = _array.chunk(symbols, 4)
 
@@ -42,7 +42,7 @@ class Cryptocurrencies extends Component{
 					this.setState({apiData: data})
 
 					if (index === chunks.length - 1) {
-						console.log('finished recursiveGetData with state = ', this.state)
+						console.log('finished getManyApiData with state = ', this.state)
 						resolve()
 					}
 				})
@@ -95,16 +95,18 @@ class Cryptocurrencies extends Component{
 
 
 	render(){
+		const apiData = this.state.apiData || {}
 		const cryptocurrencies = this.state.cryptocurrencies.map((crypto, i) => {
-			return <CryptocurrencyItem cryptocurrency={crypto} key={crypto.id} />
+			return <CryptocurrencyItem cryptocurrency={crypto} key={crypto.id} apiData={apiData[crypto.symbol]} />
 		})
+
 
 		
 
 		return (
 			<div>
 				<h5>Showing {cryptocurrencies.length} cryptocurrencies</h5>
-				<div className="container">				
+				<div className="container u-full-width">				
 					{cryptocurrencies}
 				</div>
 			</div>
