@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Virtualized from 'react-virtualized'
 import CryptocurrencyItem from './CryptocurrencyItem'
 import './cryptocurrencies.css'
+const _array = require('lodash/array');
+const _object = require('lodash/fp/object');
 
 class Cryptocurrencies extends Component{
 
@@ -10,57 +11,54 @@ class Cryptocurrencies extends Component{
 		super()
 		this.state = {
 			cryptocurrencies: [],
-			tickerData: [],
+			apiData: '',
 		}
-
 	}
 
 	componentWillMount(){
-		this.getCryptocurrencies(100)
+		this.getCryptocurrencies(50)
+		.then(res=> this.recursiveGetData(res))
+		.catch(err => console.log(err))
 	}
 
-	getCryptocurrencies(limit){
-		// TODO convert to CAD
-		axios.get('http://localhost:3000/api/cryptocurrencies?filter[limit]='+limit)
+	recursiveGetData(symbols){
+		let data = {}
+		let chunks = _array.chunk(symbols, 4)
+
+		chunks.forEach((chunk) => {
+			chunk = chunk.join(',').toUpperCase()
+			console.log(chunk)
+
+			axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${chunk}&tsyms=USD`)
 			.then(res => {
-				this.setState({ cryptocurrencies: res.data }, () => console.log(this.state))
-      })
-			.catch( err => console.error(err))
+				data = _object.merge(res.data.DISPLAY, data)
+				this.setState({apiData: data})
+			})
+			.catch(err => console.error(err))
+		})
+			// slice the symbols out, make sure they are uppercase and join them with commas
 	}
 
-
-	getTickerData(limit){
+	getCryptocurrencies(limit){ // limit 0 = all
 		// TODO convert to CAD
-		axios.get('https://api.coinmarketcap.com/v1/ticker/?limit='+limit )
+		return axios.get('http://localhost:3000/api/cryptocurrencies?filter[limit]='+limit)
 			.then(res => {
-				this.setState({ tickerData: res.data }, () => console.log(this.state))
+				this.setState({ cryptocurrencies: res.data })
+				return res.data.map((sym) => sym.symbol)
       })
-			.catch( err => console.error(err))
 	}
+
 
 	render(){
-
-		const coinCount = this.state.cryptocurrencies.length
-		const cryptocurrencyItems = this.state.cryptocurrencies.map( (cryptocurrency, i) => {
-			return (
-				<CryptocurrencyItem key={cryptocurrency.id} item={cryptocurrency}/>	
-			)
+		const cryptocurrencies = this.state.cryptocurrencies.map((crypto, i) => {
+			return <CryptocurrencyItem cryptocurrency={crypto} key={crypto.id} />
 		})
+		console.log('state.data is: ', this.state.apiData)
 
 		return (
-			<div className="grid-container">
-
-				<div className="card">
-					<div class="card-divider">
-					<h5>Showing {coinCount} cryptocurrencies</h5>
-					</div>
-					<div className="card-section">
-						<ul>
-		  			{cryptocurrencyItems}
-		  			</ul>
-		  		</div>
-				</div>
-				
+			<div>
+				<h5>Showing {cryptocurrencies.length} cryptocurrencies</h5>
+				{cryptocurrencies}
 			</div>
 		)
 

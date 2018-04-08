@@ -32,42 +32,38 @@ const CryptocurrencyItem = (props) => {
 		return round(price, 2)
 	}
 
-	const item = props.item
+	const cryptocurrency = props.cryptocurrency
 		// TODO convert to CAD
 	let 
-	priceUSD = item['price_usd'] ? '$'+ $round(item['price_usd']) : '?',
-	percentChange24HR = item['percent_change_24h'] ? item['percent_change_24h'] : '?',
+	priceUSD = cryptocurrency['price_usd'] ? '$'+ $round(cryptocurrency['price_usd']) : '?',
+	percentChange24HR = cryptocurrency['percent_change_24h'] ? cryptocurrency['percent_change_24h'] : '?',
 	industries = ''
 
-	if (item.industries) {
-		industries = 	item.industries.map((industry, i) => {
+	if (cryptocurrency.industries) {
+		industries = 	cryptocurrency.industries.map((industry, i) => {
 			return industry.name
 		})
 	}
 
 
 	return (
-      <li>
-
-				  <div className="grid-x grid-margin-x">
-				    <div className="cell small-3">
-				    	<div>
-				    		<Link to={`/cryptocurrencies/${item.id}`}>{item.name}</Link>
-	    		      <div>{item.symbol}</div>
-				    	</div>
-				    </div>
-				    <div className="cell small-3">
-				    	<div>{percentChange24HR + '%'}</div>
-				    </div>
-				    <div className="cell small-3">
-				    	<div>{priceUSD}</div>
-				    </div>				    
-				    <div className="cell small-3">
-				    	<div className="text-right">{industries ? industries : 'unknown'}</div>
-				    </div>
-				  </div>
-
-      </li>
+	  <div>
+	    <div>
+	    	<div>
+	    		<Link to={`/cryptocurrencies/${cryptocurrency.id}`}>{cryptocurrency.name}</Link>
+		      <div>{cryptocurrency.symbol}</div>
+	    	</div>
+	    </div>
+	    <div>
+	    	<div>{percentChange24HR + '%'}</div>
+	    </div>
+	    <div>
+	    	<div>{priceUSD}</div>
+	    </div>				    
+	    <div>
+	    	<div>{industries ? industries : 'unknown'}</div>
+	    </div>
+	  </div>
 	)
 }
 
