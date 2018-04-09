@@ -1,10 +1,10 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Cryptocurrencies from './Cryptocurrencies'
-import Cryptocurrency from './Cryptocurrency'
-import AddIndustryToCryptocurrency from './AddIndustryToCryptocurrency'
-import Industries from './Industries'
-import About from './About'
+import Cryptocurrencies from '../pages/Cryptocurrencies'
+import Cryptocurrency from '../pages/Cryptocurrency'
+import AddIndustryToCryptocurrency from '../pages/AddIndustryToCryptocurrency'
+import Industries from '../pages/Industries'
+import About from '../pages/About'
 
 const Main = () => (
 	<Switch>
