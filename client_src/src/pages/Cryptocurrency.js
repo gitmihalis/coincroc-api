@@ -5,38 +5,46 @@ import './css/cryptocurrency.css'
 
 
 class Cryptocurrency extends Component{
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state = {
 			cryptocurrency: '',
 			price: '',
 		}
 	}
 
-	componentWillMount(){
+	componentWillMount = () => {
 		console.log('Cryptocurrency mounted')
 		this.getCryptocurrency()
 		.then(_ => {
-			this.getTickerData(this.state.cryptocurrency.symbol.toUpperCase(), 'USD')
+			this.getTickerData('USD')
 		})
 	}
 
 	getCryptocurrency(){
-		const cryptocurrencyId = this.props.match.params.id
+		const symbol = this.props.match.params.symbol
 
-		return axios.get(`http://localhost:3000/api/cryptocurrencies/${cryptocurrencyId}`)
+		return axios.get(
+			`http://localhost:3000/api/cryptocurrencies?filter[where][name]=${symbol}`
+			)
 		.then(res => {
-			this.setState({ cryptocurrency: res.data }, () => console.log(this.state))
+			const data = res.data
+			this.setState({ cryptocurrency: data })
     })
 		.catch( err => console.error(err))
 	}
 
-	getTickerData(cryptoSym, fiatSym){
-		return axios.get(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoSym}&tsyms=${fiatSym}`)
+
+
+
+	getTickerData(fiatSym){
+		const symbol = this.props.match.params.symbol
+		return axios.get(`https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=${fiatSym}`)
 		.then(res => {
 			this.setState({ price: res.data }, () => console.log(this.state))
     })
 		.catch( err => console.error(err))
+
 	}
 
 	onDelete(){
@@ -86,8 +94,6 @@ class Cryptocurrency extends Component{
 				  <Link className="button"
 				  	to="/">Back
 				  </Link>				
-			 		<button onClick={this.onDelete.bind(this)}
-			 			className="button alert">Delete</button>
 				</div>		
 
 

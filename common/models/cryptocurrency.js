@@ -37,7 +37,8 @@ module.exports = function(Cryptocurrency) {
 		for(var key in cryptocurrencies) {
 			var symbol = cryptocurrencies[key].Symbol;
 			var name = cryptocurrencies[key].CoinName;
-			var newCrypto = { symbol, name }
+			var image = cryptocurrencies[key].ImageUrl
+			var newCrypto = { symbol, name, image }
 
 			Cryptocurrency.findOrCreate(
 				{ where: 

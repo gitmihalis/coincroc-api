@@ -26,7 +26,7 @@ const $round = (price) => {
 	if (price > Math.pow(10, 3))
 		return round(price / Math.pow(10, 3), 0) + 'K'
 	if (price < 0.001)
-		return round(price, 5)
+		return round(price, 3)
 
 	return round(price, 2)
 }
@@ -41,29 +41,34 @@ const posNegStyle = (value) => {
 }
 
 const CryptocurrencyRowItem = (props) => {
-	const industries = []
+	const industries = 
+	props.data.industries ?
+		props.data.industries.map((industry, i) => {
+			return <span key={industry.id} className='label'>{industry.name}</span>
+		}) :
+		<span>unknown</span>
 
 	return (
 
-		<Link to={`/cryptocurrencies/${props.cryptocurrency.id}`}>
+		<Link to={`/cryptocurrencies/${props.data.symbol}`}>
 			<div className="row cryptocurrency-item">	    
 	      <div className="three columns currency-name">
-	      	<span >{props.cryptocurrency.name}</span>
+	      	<span >{props.data.name}</span>
 	      </div>
 		    <div className="two columns currency-sybmbol" >
-		    	<span>{props.cryptocurrency.symbol}</span>
+		    	<span>{props.data.symbol}</span>
 		    </div>
 	    	<div className="two columns price-usd">
-	    		<span>{props.cryptocurrency['price_btc']}</span>
+	    		<span>${$round(props.data['price_usd'])}</span>
 	    	</div>		    
 	    	<div className="two columns percent-change" >
-	    		<span style={posNegStyle(props.cryptocurrency['percent_change_24h'])}>
-	    		{props.cryptocurrency['percent_change_24h'] + '%'}
+	    		<span style={posNegStyle(props.data['percent_change_24h'])}>
+	    		{props.data['percent_change_24h'] + '%'}
 	    		</span>
 	    	</div>
 	    	<div className="three columns">
 	    		<div className="label-list">
-	    		{props.cryptocurrency.industries}
+	    		{industries}
 	    		</div>
 	    	</div>
 	    </div>

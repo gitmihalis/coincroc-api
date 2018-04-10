@@ -21,6 +21,9 @@
     "fullDesc": {
       "type": "string"
     },
+    "image": {
+      "type": "string"
+    },
     "industries": {
       "type": [
         "Industry"

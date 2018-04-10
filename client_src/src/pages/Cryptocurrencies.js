@@ -3,8 +3,6 @@ import axios from 'axios'
 import CryptoTableMenu from '../components/CryptoTableMenu'
 import CryptocurrencyRowItem from '../components/CryptocurrencyRowItem'
 import './css/cryptocurrencies.css'
-import _array from 'lodash/array'
-import _object from 'lodash/object'
 
 
 
@@ -16,11 +14,17 @@ export default class Cryptocurrencies extends Component{
 			cryptoData: '',
 			tickerData: '',
 			cryptoTableData: '',
-			industries: ''
+			industries: '',
+			tableSortDirection: {
+				'price_usd': '',
+				'name': '',
+				'symbol': '',
+				'percent_change_24h': ''
+			}
 		}
 	}
 
-	componentDidMount = () => {
+	componentWillMount = () => {
 		this.fetchCryptoData()
 		.then((industryElements) => {
 			this.fetchTickerData(industryElements)
@@ -36,7 +40,7 @@ export default class Cryptocurrencies extends Component{
 			const industryElements = {}
 			const data = res.data
 			// stip the industries from the crptocurrencies
-			data.map((crypto, i) => {
+			data.forEach((crypto) => {
 				if (crypto.industries) industryElements[crypto.symbol] = crypto.industries
 			})			 
 			this.setState({
@@ -56,11 +60,8 @@ export default class Cryptocurrencies extends Component{
 				let mergedCryptos = data.map((crypto, i) => {
 					if (industryElements[crypto.symbol]) {
 						crypto['industries'] = industryElements[crypto.symbol]
-						return crypto
-					} else {
-						return crypto
 					}
-
+					return crypto
 				}) 
 				this.setState({ 
 					tickerData: data,
@@ -69,38 +70,62 @@ export default class Cryptocurrencies extends Component{
       })
 	}
 
+	sortNumeric = (key) => {
+		const tableSortDirection = this.state.tableSortDirection
+		const cryptoTableData = this.state.cryptoTableData
 
-
-
-
-	mergeDataSets = () => {
-		const industries = this.state.industries
-		const tickerData = this.state.tickerData
-
-		let mergedCrypto = tickerData.map((crypto, i) => {
-			if (industries[crypto.symbol]) {
-				crypto.industries = industries[crypto.symbol]
-				return crypto
-			}
-		})
-
-		console.log(mergedCrypto)
-	} 
-
-	sortBy = (key) => {
+		this.setState({
+			cryptoTableData: cryptoTableData.sort((a, b) => {
+				return tableSortDirection[key] === 'asc'
+				? parseFloat(a[key]) - parseFloat(b[key])
+				: parseFloat(b[key]) - parseFloat(a[key])
+			}),
+			tableSortDirection: {
+				[key]: tableSortDirection[key] === 'asc'
+				? 'desc'
+				: 'asc'
+			} 
+		}) 
 	}
+
+	sortAlpha = (key) => {
+		console.log('alphasort( ', key)
+		const tableSortDirection = this.state.tableSortDirection
+		const cryptoTableData = this.state.cryptoTableData
+		this.setState({
+			cryptoTableData: cryptoTableData.sort( (a, b) => {
+			if (tableSortDirection[key] === 'asc') {
+				return (a[key]).toUpperCase() < (b[key]).toUpperCase() ? 1 : -1
+			} else {
+				return (b[key]).toUpperCase() < (a[key]).toUpperCase() ? 1 : -1
+			}
+			}),
+			tableSortDirection: {
+				[key]: tableSortDirection[key] === 'asc'
+				? 'desc'
+				: 'asc'
+			} 			
+		})
+	}	
+
+
+
 
 
 	render(){
-		// const cryptoRowsItems = this.state.cryptocurrencies.map((crypto, i) => {
-		// 	return <CryptocurrencyRowItem cryptocurrency={crypto} key={crypto.id} />
-		// })
+		const cryptoTableData = this.state.cryptoTableData || []
+		const cryptoRowsItems = cryptoTableData.map((crypto, i) => {
+			return (<CryptocurrencyRowItem 
+							 data={crypto}
+							 key={crypto.id} />)
+		})
 
 		return (
 			<div>
-				<h5>Showing {} cryptocurrencies</h5>
+				<h5>Showing {cryptoTableData.length} cryptocurrencies</h5>
 				<div className="container u-full-width">		 
-					<CryptoTableMenu sortBy={this.sortBy} />
+					<CryptoTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
+					{cryptoRowsItems}
 				</div>
 			</div>
 		)

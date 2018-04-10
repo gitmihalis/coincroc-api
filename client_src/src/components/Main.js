@@ -11,7 +11,7 @@ const Main = () => (
 		<Route exact path="/" component={Cryptocurrencies}/>
 		<Route exact path="/about" component={About}/>
 		<Route exact path="/industries" component={Industries}/>
-		<Route exact path="/cryptocurrencies/:id" component={Cryptocurrency}/>
+		<Route exact path="/cryptocurrencies/:symbol" component={Cryptocurrency}/>
 		<Route exact path="/industry-cryptocurrency" component={AddIndustryToCryptocurrency}/>
 	</Switch>
 )
