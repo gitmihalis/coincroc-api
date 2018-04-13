@@ -10,9 +10,8 @@ const http = require('http'),
 
 request.get({uri: address}, (err, res, body) => {
 	if (err) throw err;
-
 	const $c = cheerio.load(body)
-
+	
 	$c('#messagebodydisplay_0 > div:nth-child(1) p').each(function(i, elem) {
 		if ($c(this).text().length > 1) {
 			let name = $c(this).text();

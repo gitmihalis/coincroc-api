@@ -13,7 +13,7 @@ class Navbar extends Component{
         <ul className='links'>
           <li><Link to="/">Cryptocurrencies</Link></li>
           <li><Link to="/industries">Industries</Link></li>
-          <li><Link to="/industry-cryptocurrency">Edit Industries</Link></li>
+          <li><Link to="/industry-cryptocurrency">Pair Industries</Link></li>
           <li><Link to="/about">About</Link></li>
         </ul>
         <button>MENU</button>
