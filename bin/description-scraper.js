@@ -1,52 +1,45 @@
-const phantom 		= require('phantom')
-const cheerio  		= require('cheerio')
-const path 				= require('path')
-// const app         = require(path.resolve(__dirname, '../server/server'))
-// const db          = app.dataSources.db
-// const Cryptocurrency    = app.models.Cryptocurrency
+const phantom 				= require('phantom')
+const cheerio  				= require('cheerio')
+const path 						= require('path')
+const app         		= require(path.resolve(__dirname, '../server/server'))
+const db          		= app.dataSources.db
+const Cryptocurrency  = app.models.Cryptocurrency
 
 const fetchOverview = async (tokenSymbol) => {
 	try {
 		const res = {}
-
 	  const instance = await phantom.create();
 	  const page = await instance.createPage();
-	  const status = await page.open(`https://www.cryptocompare.com/coins/${tokenSymbol}/overview/USD`)
-	  console.log(status);
+	  const status = await page.open(`https://www.cryptocompare.com/coins/${tokenSymbol}/overview`)
+	  console.log('request status: ', status);
+
 	  const content = await page.property('content');
+	  const symbol = tokenSymbol.toUpperCase()
 	  instance.exit()
-	  return content
+
+		const $c = cheerio.load(content); console.log('cheerio loaded page ? %s', (!!content))
+		const description = await $c('.coin-description > p').text()
+
+		const save = Cryptocurrency.updateAll(
+			{ symbol: symbol }, 
+			{ fullDesc: description }, 
+			function(err, info) {
+    		if (err) console.log(err);
+    		console.log('cryptocurrency was updated: ', info)
+			}
+		)
+
 	} catch ( err ) {
 		console.log(err)
 	}
 }
 
-const updateDescription = async (content, tokenSymbol) => {
-
-	try {
-		const $c = cheerio.load(content)
-		console.log(content)
-		const fullDescription = await $c('.coin-description > p').text()
-		// for (let i = 0; i < cryptos.length; i++) {
-		// 	Cryptocurrency.updateAttribute('fullDesc', cryptos[i].desc, (err, obj) => {
-		// 		if (err) throw err;
-		// 		console.log(' instance of Cryptocurrency was updated: %s', obj.instance)
-		// 	})
-		return console.log( 'fullDescription: ', fullDescription	)
-
-
-	} catch (err) {
-		console.log(err)
-	}
-}
 
 fetchOverview('eth')
 	.then( res => {
-		updateDescription(res)
+		db.disconnect()
 	})
-	.then(_ => {
-		process.exit()
-	})
+	.catch(err => { throw err })
 
 
 
