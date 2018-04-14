@@ -5,7 +5,7 @@ const app = require(path.resolve(__dirname, '../server/server'))
 const db = app.dataSources.db	
 const Cryptocurrency = app.models.Cryptocurrency
 
-const cryptos = Cryptocurrency.find(function(err, collection) {
+const cryptos = Cryptocurrency.find({limit: 5}, function(err, collection) {
 	if (err) throw err;
 
 	const series = collection.reduce(async (queue, item) => {
@@ -15,8 +15,18 @@ const cryptos = Cryptocurrency.find(function(err, collection) {
 	}, Promise.resolve([]))
 
 	series.then(data => {
-		console.log(data)
-	}) 
+		/* data is an array of symbol/descirption keyval pairs 
+		{ symbol: 'ETH', description: 'Ethereum */
+
+		// iterate and save each keyval pair in the series
+		data.forEach(function(d) {
+			updateCryptocurrency(
+				{symbol: d.symbol},
+				{fullDesc: d.description}
+			)
+		})
+	})
+	.catch(err => console.log('error saving crypto ', err))
 })
 
 
@@ -35,11 +45,11 @@ async function fetchDescription(symbol) {
 	  	.evaluate(() => {
 	  		return (
 	  			[...document.querySelectorAll('.coin-description p')]
-	  				.map(el => el.innerText).join('\n')
+	  				.map(el => el.innerText).join(' ')
 	  		)
 			})
 			.end();
-		console.log('result is ', result)
+		console.log('$Description <string>:', result)
 		return { symbol, description: result }
 	} catch (err) {
 		console.log(err)
