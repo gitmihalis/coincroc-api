@@ -1,4 +1,3 @@
-const http = require('http')
 const  cheerio  = require('cheerio')
 const  request  = require('request')
 const  path     = require('path')
@@ -30,6 +29,8 @@ request.get({uri: address}, (err, res, body) => {
 
 	}
 })
+
+// process.exit()
 
 
 	
