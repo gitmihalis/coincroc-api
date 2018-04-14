@@ -5,14 +5,20 @@ const app = require(path.resolve(__dirname, '../server/server'))
 const db = app.dataSources.db	
 const Cryptocurrency = app.models.Cryptocurrency
 
-let cryptos = []
-const collection = Cryptocurrency.find(function(err, collection) {
+const cryptos = Cryptocurrency.find(function(err, collection) {
 	if (err) throw err;
-	cryptos = collection
+
+	const series = collection.reduce(async (queue, item) => {
+		const data = await queue
+		data.push(await fetchDescription(item.symbol))
+		return data
+	}, Promise.resolve([]))
+
+	series.then(data => {
+		console.log(data)
+	}) 
 })
 
-
-if (!collection) throw err;
 
 
 /* TODO inquire into why JS doesn't wait for previous the previous promise to resolve when 
@@ -41,6 +47,8 @@ async function fetchDescription(symbol) {
 	}
 }
 
+
+
  
 
 
@@ -51,8 +59,6 @@ function updateCryptocurrency(whereCondition, newData ) {
 		return instance
 	})
 }
-
-fetchDescription('BTC')
 
 
 
