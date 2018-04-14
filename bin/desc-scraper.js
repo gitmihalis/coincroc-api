@@ -1,41 +1,50 @@
 const Nightmare = require('nightmare')
-const nightmare = Nightmare({ show: false })
+const async = require('async')
 const path = require('path')
 const app = require(path.resolve(__dirname, '../server/server'))
 const db = app.dataSources.db	
 const Cryptocurrency = app.models.Cryptocurrency
 
-const tokenDescriptions = {}
-var currCryptoSym = 'xrp'
+let cryptos = []
+const collection = Cryptocurrency.find(function(err, collection) {
+	if (err) throw err;
+	cryptos = collection
+})
 
-nightmare
-  .goto('https://www.cryptocompare.com/coins/'+currCryptoSym+'/overview')
-  .wait('.coin-description')
-  .evaluate(() => {
-  	return new Promise((resolve, reject) => {
-  		resolve(document.querySelector('.coin-description p').innerText)
-  	})
-	})
-  .end()
-  .then( tokenDescription => {
-  	tokenDescriptions[currCryptoSym] = tokenDescription
-  	console.log(tokenDescriptions[currCryptoSym])
-  })
-  /* TODO inquire into why JS doesn't wait for previous the previous promise to resolve when 
-   the `then` funcition doesn't wrap it's content in a function */
-  .then(() => {
-  	let symbol = currCryptoSym.toUpperCase()
-  	updateCryptocurrency({symbol: symbol}, {fullDesc: tokenDescriptions[currCryptoSym] }) 
-  })
-  .then(() => db.disconnect())
-  .catch(error => {
-    console.error('Search failed:', error)
-  })
+
+if (!collection) throw err;
+
+
+/* TODO inquire into why JS doesn't wait for previous the previous promise to resolve when 
+ the `then` funcition doesn't wrap it's content in a function */
+
+async function fetchDescription(symbol) {
+	console.log(`Now fetching description for ${symbol}`)
+	const nightmare = Nightmare({ show: true })
+
+	try {
+		const result = await nightmare
+	  	.goto(`https://www.cryptocompare.com/coins/${symbol}/overview`)
+	  	.wait('.coin-description')
+	  	.evaluate(() => {
+	  		return (
+	  			[...document.querySelectorAll('.coin-description p')]
+	  				.map(el => el.innerText).join('\n')
+	  		)
+			})
+			.end();
+		console.log('result is ', result)
+		return { symbol, description: result }
+	} catch (err) {
+		console.log(err)
+		return undefined
+	}
+}
+
+ 
+
 
 function updateCryptocurrency(whereCondition, newData ) {
-	// var app = require(path.resolve(__dirname, '../server/server'))
-	// var db = app.dataSources.db	
-	// var collection = db.connector.collection(collectionName);
 	Cryptocurrency.updateAll(whereCondition, newData, function(err, instance) {
 		if (err) throw err;
 		console.log('instance of Cryptocurrency was created: %s', JSON.stringify(instance))
@@ -43,25 +52,25 @@ function updateCryptocurrency(whereCondition, newData ) {
 	})
 }
 
-function fetchAllOf(model, tokenSymbol) {
-}
+fetchDescription('BTC')
 
-  // generate max fathers
-// async.times(max, function(n, next_father){
-//   var father = ...
-//   father.save(function(err){
-//     // generate 12 sons
-//     async.times(12, function(m, next_son){
-//       var son = ...
-//       son.save(function(err){
-//         next_son(err);
-//       });
-//     }, function(err, sons){
-//       next_father(err);
-//     });
-//   });
-// }, function(err, fathers) {
-//   // it's done
-// });
+
+
+
+	// AFTER END
+	//   	.then( cryptoDescription => {
+	//   		cryptoDescriptions.push({symbol: tokenSymbol, desc: cryptoDescription})
+	//   		return cryptoDescription
+	//   	})
+	//   	.then((cryptoDescription) => {
+	//   		let symbol = tokenSymbol.toUpperCase()
+	//   		updateCryptocurrency({symbol: symbol}, {fullDesc: cryptoDescription }) 
+	//   	})
+	//   	.then(() => db.disconnect())
+	//   	.catch(err => {
+	//   })			
+
+
+
 
 
