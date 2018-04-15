@@ -5,40 +5,53 @@ const app = require(path.resolve(__dirname, '../server/server'))
 const db = app.dataSources.db	
 const Cryptocurrency = app.models.Cryptocurrency
 
-const cryptos = Cryptocurrency.find({limit: 5}, function(err, collection) {
+/* Query the DS for crytpocurrencies to use for the API requests
+	<!> there was a bug when commiting 2600+ files to memory so for now
+	we paginate the results of the find method and save in smaller 
+	batches </!> */
+const cryptos = Cryptocurrency.find({
+		order: 'symbol DESC', 
+		limit: 25,
+		skip: 50 // last time scrape ran, skip was `50`		
+	}, function(err, collection) {
 	if (err) throw err;
 
 	const series = collection.reduce(async (queue, item) => {
 		const data = await queue
-		data.push(await fetchDescription(item.symbol))
+		/* If the symbol contains an asterisk, cryptocompare will not find the page overview
+		 so we can disregard it and save the scaper 404 timeouts */
+		if (!item.symbol.match(/\*/)) data.push(await fetchDescription(item.symbol))
 		return data
 	}, Promise.resolve([]))
 
-	series.then(data => {
+	series.then(newData => {
 		/* data is an array of symbol/descirption keyval pairs 
 		{ symbol: 'ETH', description: 'Ethereum */
 
 		// iterate and save each keyval pair in the series
-		data.forEach(function(d) {
+		async.each(newData, function(d) {
 			updateCryptocurrency(
 				{symbol: d.symbol},
 				{fullDesc: d.description}
 			)
+		}, function(err) {
+			console.log(err)
 		})
+
+		db.disconnect()
+		return console.log('done')
 	})
-	.catch(err => console.log('error saving crypto ', err))
+	.catch(err => console.log('error saving new Data ', err))
 })
-
-
 
 /* TODO inquire into why JS doesn't wait for previous the previous promise to resolve when 
  the `then` funcition doesn't wrap it's content in a function */
-
 async function fetchDescription(symbol) {
 	console.log(`Now fetching description for ${symbol}`)
 	const nightmare = Nightmare({ show: true })
 
 	try {
+		symbol = String(symbol).toUpperCase()
 		const result = await nightmare
 	  	.goto(`https://www.cryptocompare.com/coins/${symbol}/overview`)
 	  	.wait('.coin-description')
@@ -49,42 +62,21 @@ async function fetchDescription(symbol) {
 	  		)
 			})
 			.end();
-		console.log('$Description <string>:', result)
-		return { symbol, description: result }
+		return { symbol: symbol, description: result }
 	} catch (err) {
 		console.log(err)
 		return undefined
 	}
 }
 
-
-
- 
-
-
 function updateCryptocurrency(whereCondition, newData ) {
 	Cryptocurrency.updateAll(whereCondition, newData, function(err, instance) {
 		if (err) throw err;
+
 		console.log('instance of Cryptocurrency was created: %s', JSON.stringify(instance))
 		return instance
 	})
-}
-
-
-
-
-	// AFTER END
-	//   	.then( cryptoDescription => {
-	//   		cryptoDescriptions.push({symbol: tokenSymbol, desc: cryptoDescription})
-	//   		return cryptoDescription
-	//   	})
-	//   	.then((cryptoDescription) => {
-	//   		let symbol = tokenSymbol.toUpperCase()
-	//   		updateCryptocurrency({symbol: symbol}, {fullDesc: cryptoDescription }) 
-	//   	})
-	//   	.then(() => db.disconnect())
-	//   	.catch(err => {
-	//   })			
+}	
 
 
 
