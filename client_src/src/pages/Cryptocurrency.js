@@ -10,26 +10,28 @@ export default class Cryptocurrency extends Component{
 		this.state = {
 			cryptocurrency: '',
 			price: '',
-			image: 'http://via.placeholder.com/150x150'
+			image: 'http://res.cloudinary.com/dattofkud/image/upload/v1523815071/cryptocat/deepsea-anglerfish.jpg'
 		}
 	}
 
 	componentWillMount = () => {
 		this.getCryptocurrency()
-		.then(_ => {
-			this.getTickerData('USD')
-		})
+	}
+
+	componentDidMount = () => {
+		this.getTickerData('USD')
 	}
 
 	getCryptocurrency = () => {
 		const symbol = this.props.match.params.symbol
-
+		console.log(`getCryptocurrency ( ${symbol} )`)
 		return axios.get(
 			`http://localhost:3000/api/cryptocurrencies?filter[where][symbol]=${symbol}`
 			)
 		.then(res => {
 			const data = res.data
-			this.setState({ cryptocurrency: data, image: data.image })
+			console.log(`crypto currency got res : ${JSON.stringify(res)}`)
+			this.setState({ cryptocurrency: data})
     })
 		.catch( err => console.error(err))
 	}
@@ -47,26 +49,25 @@ export default class Cryptocurrency extends Component{
 		.catch( err => console.error(err))
 
 	}
-
+/*
 	onDelete = () => {
-		let id = this.state.cryptocurrency.id
-		console.log('delete ' + id)
-		// axios.delete(`http://localhost:3000/api/cryptocurrencies/${id}`)
-		// .then(res => this.props.history.push('/'))
-		// .catch(err => console.error(err))
+		axios.delete(`http://localhost:3000/api/cryptocurrencies/${id}`)
+		.then(res => this.props.history.push('/'))
+		.catch(err => console.error(err))
 	}
-
+*/
 	render = () => {
+		const cryptocurrency = this.state.cryptocurrency ? this.state.cryptocurrency[0] : ''
 
-		const cryptocurrency = this.state.cryptocurrency ? this.state.cryptocurrency : ''
-		const image = this.state.image
+		console.log('render() cryptocurrency state:', cryptocurrency)
 
 		return(
-			<div className="grid-container">
+			<div className="grid-container cryptocurrency">
 				<div className="media-object">
 				  <div className="media-object-section">
 				    <div className="thumbnail">
-				      <img src={image} alt="placeholder"/>
+				      <img src={`https://cryptocompare.com${cryptocurrency.image}`} 
+			      	alt={cryptocurrency.name}/>
 				    </div>
 				  </div>
 				  <div className="media-object-section">
@@ -79,7 +80,9 @@ export default class Cryptocurrency extends Component{
 					</div>
 				</div>
 				<div className="callout">
-				  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer iaculis elit eu pulvinar mattis. Sed efficitur nulla id tempus volutpat. Nam blandit, eros sed interdum placerat, felis dui tempor nibh, nec ornare leo tortor vel quam. Nunc ut metus eu ante iaculis lacinia sit amet feugiat justo. Morbi consectetur bibendum lorem. Mauris ac varius lorem. Sed et arcu lacinia nisl molestie efficitur. </p>
+				  <p>
+				  	{cryptocurrency.fullDesc}
+				  </p>
 				</div>
 				<div className="expanded button-group">
 				  <Link className="button"

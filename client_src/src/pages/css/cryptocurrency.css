@@ -5,3 +5,8 @@
 .button.add {
 	background-color: #6ab04c
 }
+
+.cryptocurrency img {
+	height: 10em;
+	width: 10em;
+}
