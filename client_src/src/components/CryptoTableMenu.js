@@ -4,33 +4,32 @@ const CryptoTableMenu = props => (
   
 	<div className="row table-menu">					    
     <div className="three columns currency-name">
-      <button
+      <button className="button"
       onClick={() => props.sortAlpha('name')}>
         Name
       </button>
     </div>
     <div className="two columns currency-sybmbol" >
-      <button 
+      <button className="button" 
       onClick={() => props.sortAlpha('symbol')}>
         Symbol
       </button>
     </div>
   	<div className="two columns price-usd">
-			<button 
+			<button className="button" 
       onClick={() => props.sortNumeric('price_usd')}>
 				Price
 			</button>
   	</div>		    
   	<div className="two columns percent-change" >
-      <button
+      <button className="button"
       onClick={() => props.sortNumeric('percent_change_24h')}>
         % Change
       </button>
   	</div>				 	
   	<div className="three columns">
-      <button>
-        Industry
-      </button>
+      <p>
+      </p>
   	</div>
   </div>
 )

@@ -32,6 +32,7 @@ const $round = (price) => {
 }
 
 const posNegStyle = (value) => {
+	if (!value) return {}
 	const number = Number(value.replace(/[^0-9.-]+/g,""));
 	const style = {textAlign: 'right', display: 'block'}
 	if (number === 0) style.color = 'inherit'

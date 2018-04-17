@@ -10,7 +10,7 @@ export default class Cryptocurrency extends Component{
 		this.state = {
 			cryptocurrency: '',
 			price: '',
-			image: 'http://res.cloudinary.com/dattofkud/image/upload/v1523815071/cryptocat/deepsea-anglerfish.jpg'
+			defaultImg: 'http://res.cloudinary.com/dattofkud/image/upload/v1523815071/cryptocat/deepsea-anglerfish.jpg'
 		}
 	}
 
@@ -58,6 +58,7 @@ export default class Cryptocurrency extends Component{
 */
 	render = () => {
 		const cryptocurrency = this.state.cryptocurrency ? this.state.cryptocurrency[0] : ''
+		const image = cryptocurrency ? cryptocurrency.image : 'https://cryptocomapre.com' + this.state.defaultImg
 
 		console.log('render() cryptocurrency state:', cryptocurrency)
 
@@ -66,7 +67,7 @@ export default class Cryptocurrency extends Component{
 				<div className="media-object">
 				  <div className="media-object-section">
 				    <div className="thumbnail">
-				      <img src={`https://cryptocompare.com${cryptocurrency.image}`} 
+				      <img src={`https://cryptocompare.com${image}`} 
 			      	alt={cryptocurrency.name}/>
 				    </div>
 				  </div>
