@@ -6,8 +6,9 @@
 .cryptocurrency-item:hover {
 	background: #f2f2f2;
 }
+
 .cryptocurrency-item:hover .label-list .label{
-	background-color: #aaa;
+	background-color: #fff;
 }
 
 .label-list {

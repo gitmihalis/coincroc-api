@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import './css/industries.css'
+
 
 class Industries extends Component{
 
@@ -9,7 +11,6 @@ class Industries extends Component{
 		this.state = {
 			industries: [],
 		}
-
 	}
 
 	componentWillMount(){
@@ -33,9 +34,9 @@ class Industries extends Component{
       <li>
 				  <div className="grid-x grid-margin-x">
 				    <div className="cell">
-				    	<div>
+				    	<Link to={`/industries/${industry.name}`}>
 				    		{industry.name}
-				    	</div>
+				    	</Link>
 				    </div>	    
 				  </div>
       </li>

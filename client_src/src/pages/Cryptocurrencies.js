@@ -8,8 +8,8 @@ import './css/cryptocurrencies.css'
 
 export default class Cryptocurrencies extends Component{
 
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state = {
 			cryptoData: '',
 			tickerData: '',
@@ -34,7 +34,7 @@ export default class Cryptocurrencies extends Component{
 		})	
 	}
 
-	fetchCryptoData = async () => {
+	fetchCryptoData = () => {
 		return axios.get('http://localhost:3000/api/cryptocurrencies')
 		.then( (res) => {
 			const industryElements = {}
@@ -51,7 +51,7 @@ export default class Cryptocurrencies extends Component{
 		})
 	}
 
-	fetchTickerData = async (industryElements) => { 
+	fetchTickerData = (industryElements) => { 
 		return axios.get('https://api.coinmarketcap.com/v1/ticker/')
 			.then(res => {
 				const data = res.data
@@ -114,7 +114,7 @@ export default class Cryptocurrencies extends Component{
 
 	render(){
 		const cryptoTableData = this.state.cryptoTableData || []
-		const cryptoRowsItems = cryptoTableData.map((crypto, i) => {
+		const rowItems = cryptoTableData.map((crypto) => {
 			return (<CryptocurrencyRowItem 
 							 data={crypto}
 							 key={crypto.id} />)
@@ -125,7 +125,7 @@ export default class Cryptocurrencies extends Component{
 				<h5>Showing {cryptoTableData.length} cryptocurrencies</h5>
 				<div className="container u-full-width">		 
 					<CryptoTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
-					{cryptoRowsItems}
+					{rowItems}
 				</div>
 			</div>
 		)

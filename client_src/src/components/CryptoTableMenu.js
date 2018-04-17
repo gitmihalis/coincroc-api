@@ -2,7 +2,7 @@ import React from 'react'
 
 const CryptoTableMenu = props => (
   
-	<div className="row cryptocurrency-item">					    
+	<div className="row table-menu">					    
     <div className="three columns currency-name">
       <button
       onClick={() => props.sortAlpha('name')}>

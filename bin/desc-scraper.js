@@ -12,7 +12,7 @@ const Cryptocurrency = app.models.Cryptocurrency
 const cryptos = Cryptocurrency.find({
 		order: 'symbol DESC', 
 		limit: 25,
-		skip: 50 // last time scrape ran, skip was `50`		
+		skip: 75 // last time scrape ran, skip was `75`		
 	}, function(err, collection) {
 	if (err) throw err;
 
