@@ -182,7 +182,6 @@ export default class Cryptocurrencies extends Component{
 				</div> 
 			</div>
 		)
-
 	}
 
 }

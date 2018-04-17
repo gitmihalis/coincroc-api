@@ -21,7 +21,10 @@ class Industries extends Component{
 		// TODO convert to CAD
 		axios.get('http://localhost:3000/api/industries?filter[where][depth]=1')
 			.then(res => {
-				this.setState({ industries: res.data }, () => console.log(this.state))
+				const sorted = res.data.sort((a, b) => {
+					return a.name > b.name ? 1 : -1
+				})
+				this.setState({ industries: sorted }, () => console.log(this.state))
       })
 			.catch( err => console.error(err))
 	}
@@ -31,7 +34,7 @@ class Industries extends Component{
 		const coinCount = this.state.industries.length
 		const industryItems = this.state.industries.map( (industry, i) => {
 			return (
-      <li>
+      <li key={industry.id}>
 				  <div className="grid-x grid-margin-x">
 				    <div className="cell">
 				    	<Link to={`/industries/${industry.name}`}>

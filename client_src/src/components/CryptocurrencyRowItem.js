@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './css/cryptocurrency-item.css'
+import './css/cryptocurrency.css'
 
 /*
 Table column titles in Cryptocurrencies are: 

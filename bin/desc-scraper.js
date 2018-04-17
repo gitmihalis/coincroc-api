@@ -11,8 +11,8 @@ const Cryptocurrency = app.models.Cryptocurrency
 	batches </!> */
 const cryptos = Cryptocurrency.find({
 		order: 'symbol DESC', 
-		limit: 25,
-		skip: 75 // last time scrape ran, skip was `75`		
+		limit: 100,
+		skip: 300 
 	}, function(err, collection) {
 	if (err) throw err;
 
@@ -39,7 +39,7 @@ const cryptos = Cryptocurrency.find({
 		})
 
 		db.disconnect()
-		return console.log('done')
+		console.log('done')
 	})
 	.catch(err => console.log('error saving new Data ', err))
 })
