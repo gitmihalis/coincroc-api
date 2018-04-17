@@ -69,10 +69,10 @@ export default class Industry extends Component{
 
 	sortNumeric = (key) => {
 		const tableSortDirection = this.state.tableSortDirection
-		const cryptoTableData = this.state.cryptoTableData
+		const cryptoTableData = this.state.tickerData
 
 		this.setState({
-			cryptoTableData: cryptoTableData.sort((a, b) => {
+			tickerData: cryptoTableData.sort((a, b) => {
 				return tableSortDirection[key] === 'asc'
 				? parseFloat(a[key]) - parseFloat(b[key])
 				: parseFloat(b[key]) - parseFloat(a[key])
@@ -88,14 +88,14 @@ export default class Industry extends Component{
 	sortAlpha = (key) => {
 		console.log('alphasort( ', key)
 		const tableSortDirection = this.state.tableSortDirection
-		const cryptoTableData = this.state.cryptoTableData
+		const cryptoTableData = this.state.tickerData
 		this.setState({
-			cryptoTableData: cryptoTableData.sort( (a, b) => {
-			if (tableSortDirection[key] === 'asc') {
-				return (a[key]).toUpperCase() < (b[key]).toUpperCase() ? 1 : -1
-			} else {
-				return (b[key]).toUpperCase() < (a[key]).toUpperCase() ? 1 : -1
-			}
+			tickerData: cryptoTableData.sort( (a, b) => {
+				if (tableSortDirection[key] === 'asc') {
+					return (a[key]).toUpperCase() < (b[key]).toUpperCase() ? 1 : -1
+				} else {
+					return (b[key]).toUpperCase() < (a[key]).toUpperCase() ? 1 : -1
+				}
 			}),
 			tableSortDirection: {
 				[key]: tableSortDirection[key] === 'asc'
