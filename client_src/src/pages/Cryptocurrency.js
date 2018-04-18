@@ -55,48 +55,49 @@ export default class Cryptocurrency extends Component{
 		const image = cryptocurrency ? cryptocurrency.image : 'https://cryptocomapre.com' + this.state.defaultImg
 		const industryList = 
 			cryptocurrency.industries ?
-			cryptocurrency.industries.map((industry) => {
-				return (
-					<li key={industry.id}>
-						<Link to={`/industries/${industry.name}`}>
-							<span className="label">{industry.name}</span>
-						</Link>
-					</li>
-				) 
-			}) :
-			[]
-
-		console.log('render() cryptocurrency state:', cryptocurrency)
+				cryptocurrency.industries.map((industry) => {
+					return (
+		        <li className="industry"
+		        key={industry.id}>
+		          <Link to={`/industries/${industry.name}`}>
+		            {industry.name}
+		          </Link>
+		        </li>
+					)
+				}) 
+				:
+				[]
 
 		return(
-			<div className="container cryptocurrency">
-				<div className="row">   
-			    <div className="columns six">
-				    <div className="thumbnail">
-				      <img src={`https://cryptocompare.com${image}`} alt={cryptocurrency.name}/>
-			    	</div>
-					</div>
-					<div className="columns six">
-				    <h1>{cryptocurrency.name}</h1>
-				    <h4>{cryptocurrency.symbol}</h4>
-    				<h6 className="left">Price: ${this.state.price.USD}</h6>
-					</div>
-				</div>
-				<div className="row">
-  				<ul className="industries menu horizontal">
-  				{industryList}
-					</ul>
-				</div>
-				<div className="row">
-					<div className="description">
-				  <p>{cryptocurrency.fullDesc}</p>
+			<div className="cryptocurrency mui-container">
+				<div className="mui-row">
+			    <div class="mui-col-md-4 mui--text-center">
+			      <img className="coin-avatar" 
+			      		 src={`https://cryptocompare.com${image}`} 
+			      		 alt={cryptocurrency.name}
+			      />
+			      <h1>{cryptocurrency.name}</h1>
+		    	</div>
+		    	<div className="mui-col-md-4 mui--text-center">
+				    <h2>[ {cryptocurrency.symbol} ]</h2>
+	  				<h3 className="left">Price: ${this.state.price.USD}</h3>
+	  				<ul className="mui-list--inline">
+							{industryList}
+						</ul>
 					</div>
 				</div>
-				<div className="expanded button-group">
-				  <Link className="button"
-				  	to="/">Back
-				  </Link>				
-				</div>		
+				
+				<div className="mui-row">
+						<div className="description">
+						  <p>{cryptocurrency.fullDesc}</p>
+						</div>
+						<div className="expanded button-group">
+						  <Link className="mui-btn"
+						  	to="/">Back
+						  </Link>				
+						</div>
+				</div>
+
 			</div>
 		)
 	}

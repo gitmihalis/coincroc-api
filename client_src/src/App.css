@@ -3,7 +3,7 @@
 body {
 	font-family: 'IBM Plex Mono', monospace;
 	color: #fff;
-	background-color: #3d3d3d;
+	background-color: #242124;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -12,4 +12,35 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
 	color: #fff;
+}
+
+a {
+	color:  #7efff5;
+}
+
+.industry li a {
+	background-color: none;
+}
+
+.mui-table.mui-table--bordered>tbody>tr>td,
+.mui-table>thead>tr>th {
+  border-bottom: 1px solid rgba(255,255,255,.8);
+}
+
+.mui-btn.mui-btn--flat {
+	background-color: white;
+}
+
+.mui-panel.industry {
+	color: #3d3d3d;
+	text-transform: uppercase;
+}
+
+img.coin-avatar {
+	height: 12em;
+	width: 12em;
+}
+
+.mui-btn {
+	  border-radius: 0px !important;
 }

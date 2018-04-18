@@ -26,7 +26,7 @@ nav.greedy button {
   outline: 0;
   border: 0;
   font-weight: bold;
-  background: #32ff7e;
+  background: #fff;
   color: #404040;
 }
 
@@ -46,7 +46,7 @@ nav.greedy button::after {
   height: 30px;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: #67e6dc;
   color: #4b4b4b;
   border-radius: 50%;
   font-size: 14px;
@@ -70,7 +70,7 @@ ul.links li {
 }
 
 ul.links li a {
-  color: #32ff7e;
+  color: #7efff5;
 }
 
 ul.hidden-links {
@@ -82,7 +82,7 @@ ul.hidden-links {
 }
 
 ul.hidden-links li a {
-  color: #32ff7e;
+  color: #7efff5;
   padding-right: 1rem;
 }
 

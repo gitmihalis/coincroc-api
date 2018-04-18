@@ -33,9 +33,9 @@ const posNegStyle = (value) => {
   if (!value) return {};
   const number = Number(value.replace(/[^0-9.-]+/g, ''));
   const style = {};
-  if (number === 0) style.color = '#000';
-  if (number > 0) style.color = '#00b894';
-  if (number < 0) style.color = '#d63031';
+  if (number === 0) style.color = 'inherit';
+  if (number > 0) style.color = '#3ae374';
+  if (number < 0) style.color = '#ff3838';
   return style;
 };
 

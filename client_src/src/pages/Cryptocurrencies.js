@@ -161,31 +161,30 @@ export default class Cryptocurrencies extends Component{
 			<div>
 				<h5>Showing {cryptoTableData.length} cryptocurrencies</h5>
 
-				<table class="mui-table">
+				<table class="mui-table mui-table--bordered" id="table">
 					<CryptoTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
 					<tbody>
 						{rowItems ? rowItems : 'none'}
 					</tbody>
 				</table>
 				<div className="button-group">
-					<button 
-						className="button"
-						onClick={this.handlePagePrev}
-					>Prev
-					</button>
-					<button 
-						className="button"
-						onClick={this.handlePageNext}
-					>Next
-					</button>					
-					<button 
-						className="button"
-						onClick={() => { 
-							this.fetchTickerData(this.state.industries, 0, 0) 
-							document.documentElement.scrollTop = 0
-						}}
-					>All
-					</button>
+				<button 
+				className="mui-btn mui-btn--flat"
+				onClick={this.handlePagePrev}
+				>Prev</button>
+
+				<button 
+				className="mui-btn mui-btn--flat"
+				onClick={this.handlePageNext}
+				>Next</button>
+
+				<button 
+				className="mui-btn mui-btn--flat"
+				onClick={() => { 
+					this.fetchTickerData(this.state.industries, 0, 0) 
+					document.documentElement.scrollTop = 0
+				}}>All</button>
+				
 				</div> 
 			</div>
 		)

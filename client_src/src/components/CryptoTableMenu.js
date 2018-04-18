@@ -26,7 +26,7 @@ const CryptoTableMenu = props => (
         </a>
     	</th>
     	<th className="two columns">
-        <a>Industry</a>
+        <span>Industry</span>
   	  </th>
     </tr>
   </thead>
