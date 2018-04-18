@@ -128,6 +128,7 @@ export default class Cryptocurrencies extends Component{
 				start: newStart
 			}
 		}, console.log(this.state))
+		document.documentElement.scrollTop = 0
 	}
 	handlePagePrev = (e) => {
 		console.log('handle prev page')
@@ -141,6 +142,7 @@ export default class Cryptocurrencies extends Component{
 				start: newStart
 			}
 		}, console.log(this.state))
+		document.documentElement.scrollTop = 0
 	}	
 
 
@@ -158,25 +160,30 @@ export default class Cryptocurrencies extends Component{
 		return (
 			<div>
 				<h5>Showing {cryptoTableData.length} cryptocurrencies</h5>
-				<div className="container u-full-width">		 
+
+				<table class="mui-table">
 					<CryptoTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
-					{rowItems ? rowItems : 'none'}
-				</div>
-				<hr />
-				<div className='actions'>
-					<button 
-						className="button"
-						onClick={this.handlePageNext}
-					>Next
-					</button>
+					<tbody>
+						{rowItems ? rowItems : 'none'}
+					</tbody>
+				</table>
+				<div className="button-group">
 					<button 
 						className="button"
 						onClick={this.handlePagePrev}
 					>Prev
 					</button>
 					<button 
-						className="button button-primary"
-						onClick={() => { this.fetchTickerData(this.state.industries, 0, 0) } }
+						className="button"
+						onClick={this.handlePageNext}
+					>Next
+					</button>					
+					<button 
+						className="button"
+						onClick={() => { 
+							this.fetchTickerData(this.state.industries, 0, 0) 
+							document.documentElement.scrollTop = 0
+						}}
 					>All
 					</button>
 				</div> 

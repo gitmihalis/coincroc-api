@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import './css/industries.css'
 
 
+
 class Industries extends Component{
 
 	constructor(){
@@ -34,27 +35,23 @@ class Industries extends Component{
 		const coinCount = this.state.industries.length
 		const industryItems = this.state.industries.map( (industry, i) => {
 			return (
-      <li key={industry.id}>
-				  <div className="grid-x grid-margin-x">
-				    <div className="cell">
+      <div className="row" key={industry.id}>
 				    	<Link to={`/industries/${industry.name}`}>
 				    		{industry.name}
 				    	</Link>
-				    </div>	    
-				  </div>
-      </li>
+      </div>
 			)
 		})
 
 		return (
-			<div className="grid-container">
+			<div className="container">
 
 				<div className="card">
 					<div className="card-divider">
 					<h5>Showing {coinCount} industries</h5>
 					</div>
 					<div className="card-section">
-						<ul>
+						<ul className="industries">
 		  			{industryItems}
 		  			</ul>
 		  		</div>

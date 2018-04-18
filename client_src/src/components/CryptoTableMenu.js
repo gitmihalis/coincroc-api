@@ -1,37 +1,35 @@
 import React from 'react'
+import './css/cryptocurrency.css'
 
 const CryptoTableMenu = props => (
   
-	<div className="row table-menu">					    
-    <div className="three columns currency-name">
-      <button className="button"
-      onClick={() => props.sortAlpha('name')}>
-        Name
-      </button>
-    </div>
-    <div className="two columns currency-sybmbol" >
-      <button className="button" 
-      onClick={() => props.sortAlpha('symbol')}>
-        Symbol
-      </button>
-    </div>
-  	<div className="two columns price-usd">
-			<button className="button" 
-      onClick={() => props.sortNumeric('price_usd')}>
-				Price
-			</button>
-  	</div>		    
-  	<div className="two columns percent-change" >
-      <button className="button"
-      onClick={() => props.sortNumeric('percent_change_24h')}>
-        % Change
-      </button>
-  	</div>				 	
-  	<div className="three columns">
-      <p>
-      </p>
-  	</div>
-  </div>
+	<thead>
+    <tr>
+      <th className="currency-name">
+        <a onClick={() => props.sortAlpha('name')}>
+          Name
+        </a>
+      </th>
+      <th className="currency-sybmbol">
+        <a onClick={() => props.sortAlpha('symbol')}>
+          Symbol
+        </a>
+      </th>
+    	<th className="price-usd">
+  			<a onClick={() => props.sortNumeric('price_usd')}>
+  				Price
+  			</a>
+    	</th>		    
+    	<th className="percent-change">
+        <a onClick={() => props.sortNumeric('percent_change_24h')}>
+          24hr.change
+        </a>
+    	</th>
+    	<th className="two columns">
+        <a>Industry</a>
+  	  </th>
+    </tr>
+  </thead>
 )
 
 export default CryptoTableMenu

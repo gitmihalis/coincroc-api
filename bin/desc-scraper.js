@@ -9,10 +9,11 @@ const Cryptocurrency = app.models.Cryptocurrency
 	<!> there was a bug when commiting 2600+ files to memory so for now
 	we paginate the results of the find method and save in smaller 
 	batches </!> */
+const SKIP = 2500
 const cryptos = Cryptocurrency.find({
 		order: 'symbol DESC', 
-		limit: 100,
-		skip: 300 
+		limit: 500,
+		skip: SKIP 
 	}, function(err, collection) {
 	if (err) throw err;
 
@@ -37,9 +38,8 @@ const cryptos = Cryptocurrency.find({
 		}, function(err) {
 			console.log(err)
 		})
-
+		console.log('finished save, last start from ', SKIP)
 		db.disconnect()
-		console.log('done')
 	})
 	.catch(err => console.log('error saving new Data ', err))
 })
@@ -48,7 +48,7 @@ const cryptos = Cryptocurrency.find({
  the `then` funcition doesn't wrap it's content in a function */
 async function fetchDescription(symbol) {
 	console.log(`Now fetching description for ${symbol}`)
-	const nightmare = Nightmare({ show: true })
+	const nightmare = Nightmare({ show: false })
 
 	try {
 		symbol = String(symbol).toUpperCase()
@@ -74,7 +74,6 @@ function updateCryptocurrency(whereCondition, newData ) {
 		if (err) throw err;
 
 		console.log('instance of Cryptocurrency was created: %s', JSON.stringify(instance))
-		return instance
 	})
 }	
 

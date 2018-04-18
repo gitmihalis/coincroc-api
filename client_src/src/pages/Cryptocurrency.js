@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import './css/cryptocurrency.css'
+import './css/cryptocurrencies.css'
 
 
 export default class Cryptocurrency extends Component{
@@ -14,11 +14,11 @@ export default class Cryptocurrency extends Component{
 		}
 	}
 
-	componentWillMount = () => {
+	componentDidMount = () => {
 		this.getCryptocurrency()
 	}
 
-	componentDidMount = () => {
+	componentWillMount = () => {
 		this.getTickerData('USD')
 	}
 
@@ -49,41 +49,48 @@ export default class Cryptocurrency extends Component{
 		.catch( err => console.error(err))
 
 	}
-/*
-	onDelete = () => {
-		axios.delete(`http://localhost:3000/api/cryptocurrencies/${id}`)
-		.then(res => this.props.history.push('/'))
-		.catch(err => console.error(err))
-	}
-*/
+
 	render = () => {
 		const cryptocurrency = this.state.cryptocurrency ? this.state.cryptocurrency[0] : ''
 		const image = cryptocurrency ? cryptocurrency.image : 'https://cryptocomapre.com' + this.state.defaultImg
+		const industryList = 
+			cryptocurrency.industries ?
+			cryptocurrency.industries.map((industry) => {
+				return (
+					<li key={industry.id}>
+						<Link to={`/industries/${industry.name}`}>
+							<span className="label">{industry.name}</span>
+						</Link>
+					</li>
+				) 
+			}) :
+			[]
 
 		console.log('render() cryptocurrency state:', cryptocurrency)
 
 		return(
-			<div className="grid-container cryptocurrency">
-				<div className="media-object">
-				  <div className="media-object-section">
+			<div className="container cryptocurrency">
+				<div className="row">   
+			    <div className="columns six">
 				    <div className="thumbnail">
-				      <img src={`https://cryptocompare.com${image}`} 
-			      	alt={cryptocurrency.name}/>
-				    </div>
-				  </div>
-				  <div className="media-object-section">
-				    <h4>{cryptocurrency.name} {cryptocurrency.symbol}</h4>
-    				<p>Price: ${this.state.price.USD}</p>
-				  </div>
-				  <div className="media-object-section">
-	  				<ul className="industries menu vertical">
-						</ul>
+				      <img src={`https://cryptocompare.com${image}`} alt={cryptocurrency.name}/>
+			    	</div>
+					</div>
+					<div className="columns six">
+				    <h1>{cryptocurrency.name}</h1>
+				    <h4>{cryptocurrency.symbol}</h4>
+    				<h6 className="left">Price: ${this.state.price.USD}</h6>
 					</div>
 				</div>
-				<div className="callout">
-				  <p>
-				  	{cryptocurrency.fullDesc}
-				  </p>
+				<div className="row">
+  				<ul className="industries menu horizontal">
+  				{industryList}
+					</ul>
+				</div>
+				<div className="row">
+					<div className="description">
+				  <p>{cryptocurrency.fullDesc}</p>
+					</div>
 				</div>
 				<div className="expanded button-group">
 				  <Link className="button"
@@ -91,7 +98,6 @@ export default class Cryptocurrency extends Component{
 				  </Link>				
 				</div>		
 			</div>
-
 		)
 	}
 }
