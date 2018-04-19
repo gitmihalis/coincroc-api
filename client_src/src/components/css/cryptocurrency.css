@@ -32,3 +32,12 @@ li.industry {
 li.industry a {
 	transform: skewX(16deg);
 }
+
+.industryList {
+	margin: 1em auto;
+}
+
+.industryList li {
+	margin: 1em .3em;
+	display: inline-block;
+}

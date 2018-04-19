@@ -4,7 +4,7 @@ import CryptoTableMenu from '../components/CryptoTableMenu'
 import CryptocurrencyRowItem from '../components/CryptocurrencyRowItem'
 import './css/cryptocurrencies.css'
 
-const SKIP_AMOUNT = 100
+const SKIP_AMOUNT = 50
 
 export default class Cryptocurrencies extends Component{
 
@@ -59,7 +59,7 @@ export default class Cryptocurrencies extends Component{
 	fetchtickerData - Appneds the industries from DS to the API data and sets the state
 	with the merged data.  
 	*/
-	fetchTickerData = (industryElements, skip=0, limit=100) => { 
+	fetchTickerData = (industryElements, skip=0, limit=SKIP_AMOUNT) => { 
 		console.log(`https://api.coinmarketcap.com/v1/ticker/?start=${skip}&limit=${limit}`)
 		return axios.get(`https://api.coinmarketcap.com/v1/ticker/?start=${skip}&limit=${limit}`)
 			.then(res => {
@@ -167,23 +167,26 @@ export default class Cryptocurrencies extends Component{
 						{rowItems ? rowItems : 'none'}
 					</tbody>
 				</table>
+
+				
 				<div className="button-group">
 				<button 
-				className="mui-btn mui-btn--flat"
+				className="mui-btn mui-btn--raised"
 				onClick={this.handlePagePrev}
 				>Prev</button>
 
-				<button 
-				className="mui-btn mui-btn--flat"
-				onClick={this.handlePageNext}
-				>Next</button>
 
 				<button 
-				className="mui-btn mui-btn--flat"
+				className="mui-btn mui-btn--raised"
 				onClick={() => { 
 					this.fetchTickerData(this.state.industries, 0, 0) 
 					document.documentElement.scrollTop = 0
 				}}>All</button>
+
+				<button 
+				className="mui-btn mui-btn--raised"
+				onClick={this.handlePageNext}
+				>Next</button>				
 				
 				</div> 
 			</div>

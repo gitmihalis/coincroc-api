@@ -12,7 +12,7 @@ const App = () => (
 	  <div className="mui-container">
 	  	<Main />
 	  </div>
-	  <div className="mui-fluid-container">
+	  <div className="mui-container">
 		  <Footer />
 		 </div>
 	</div>

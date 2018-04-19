@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Cantarell:400,400i');
+
+
 .nav-wrapper {
   padding: 1.55rem;
 }
@@ -11,12 +14,21 @@ nav.greedy {
 }
 
 nav.greedy h1 {
-  display: flex;
+/*  display: flex;
   font-size: 1.8em;
   align-self: stretch;
   align-items: center;
   padding: 0 1.5rem;
-  font-weight: bold;
+  font-weight: bold;*/
+}
+
+nav.greedy img {
+  position: absolute;
+  top: .5em;
+  padding-top: .7rem;
+  max-width: 80%;
+  max-height: 90px;
+  z-index: -1;
 }
 
 nav.greedy button {
@@ -26,7 +38,8 @@ nav.greedy button {
   outline: 0;
   border: 0;
   font-weight: bold;
-  background: #fff;
+  box-shadow: 2px 2px 2px #000;
+  background: #fff200;
   color: #404040;
 }
 
@@ -46,16 +59,17 @@ nav.greedy button::after {
   height: 30px;
   align-items: center;
   justify-content: center;
-  background: #67e6dc;
+  background: #32ff7e;
   color: #4b4b4b;
   border-radius: 50%;
   font-size: 14px;
   line-height: 14px;
-  margin-left: 1rem;
+  margin-left: .7rem;
   margin-right: calc(-1rem + -8px);
 }
 
 ul.links {
+  margin: 0 0 0 5em;
   list-style: inside circle;
   display: flex;
   justify-content: flex-end;
@@ -64,9 +78,13 @@ ul.links {
 }
 
 ul.links li {
+  font-family: "Cantarell";
+  font-style: italic;
   margin: 0;
   flex: none;
   padding: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 ul.links li a {
@@ -74,9 +92,12 @@ ul.links li a {
 }
 
 ul.hidden-links {
+  font-family: "Cantarell";
+  text-transform: uppercase;
   list-style: circle;
   position: absolute;
-  background: #000;
+  background: #3d3d3d;
+  box-shadow: 0 0 300px rgba(0,0,0,1);
   right: 0;
   top: 100%;
 }
@@ -105,5 +126,9 @@ ul.hidden-links li {
 @media screen and (max-width: 375px) {
   nav.greedy button::after {
     display: none;
+  }
+
+  nav.greedy button {
+    padding-right: 1.678rem;
   }
 }

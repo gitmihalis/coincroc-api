@@ -9,7 +9,7 @@ export default function Navbar (props) {
       <div className="nav-wrapper">
         <nav className='greedy' id="page-top">
           <h1>
-          CoinCroc
+          <img src="http://res.cloudinary.com/dattofkud/image/upload/v1524096719/cryptocat/cryptocroc/coincroc-brand.png" />
           </h1>
           <ul className='links'>
             <li><Link to="/">Cryptocurrencies</Link></li>

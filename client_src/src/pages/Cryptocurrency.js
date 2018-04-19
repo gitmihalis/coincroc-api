@@ -71,17 +71,17 @@ export default class Cryptocurrency extends Component{
 		return(
 			<div className="cryptocurrency mui-container">
 				<div className="mui-row">
-			    <div class="mui-col-md-4 mui--text-center">
+			    <div class="mui-col-sm-4 mui--text-center">
 			      <img className="coin-avatar" 
 			      		 src={`https://cryptocompare.com${image}`} 
 			      		 alt={cryptocurrency.name}
 			      />
 			      <h1>{cryptocurrency.name}</h1>
 		    	</div>
-		    	<div className="mui-col-md-4 mui--text-center">
+		    	<div className="mui-col-sm-6 mui--text-center">
 				    <h2>[ {cryptocurrency.symbol} ]</h2>
 	  				<h3 className="left">Price: ${this.state.price.USD}</h3>
-	  				<ul className="mui-list--inline">
+	  				<ul className="mui-list--inline industryList">
 							{industryList}
 						</ul>
 					</div>
