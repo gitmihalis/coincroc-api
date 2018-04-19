@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import CryptoTableMenu from '../components/CryptoTableMenu'
 import CryptocurrencyRowItem from '../components/CryptocurrencyRowItem'
-import './css/cryptocurrencies.css'
 
 const SKIP_AMOUNT = 50
 
@@ -161,7 +160,7 @@ export default class Cryptocurrencies extends Component{
 			<div>
 				<h5>Showing {cryptoTableData.length} cryptocurrencies</h5>
 
-				<table class="mui-table mui-table--bordered" id="table">
+				<table className="mui-table mui-table--bordered" id="table">
 					<CryptoTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
 					<tbody>
 						{rowItems ? rowItems : 'none'}

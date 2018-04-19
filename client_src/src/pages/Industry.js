@@ -1,13 +1,13 @@
 /*
-[] - show percent changes for crypto currencies
+[x] - show percent changes for crypto currencies
 [] - shoow totals
-[] - display in row items...
+[x] - display in row items...
 */
 import React, { Component } from 'react'
 import axios from 'axios'
 import CryptoTableMenu from '../components/CryptoTableMenu'
+import IndustryTableMenu from '../components/IndustryTableMenu'
 import IndustryRowItem from '../components/IndustryRowItem'
-import './css/cryptocurrencies.css'
 
 
 
@@ -70,7 +70,7 @@ export default class Industry extends Component{
 	sortNumeric = (key) => {
 		const tableSortDirection = this.state.tableSortDirection
 		const cryptoTableData = this.state.tickerData
-
+		if (!cryptoTableData) return
 		this.setState({
 			tickerData: cryptoTableData.sort((a, b) => {
 				return tableSortDirection[key] === 'asc'
@@ -86,9 +86,9 @@ export default class Industry extends Component{
 	}
 
 	sortAlpha = (key) => {
-		console.log('alphasort( ', key)
 		const tableSortDirection = this.state.tableSortDirection
 		const cryptoTableData = this.state.tickerData
+		if (!cryptoTableData) return
 		this.setState({
 			tickerData: cryptoTableData.sort( (a, b) => {
 				if (tableSortDirection[key] === 'asc') {
@@ -118,11 +118,12 @@ export default class Industry extends Component{
 			<div>
 				<hr/>
 				<h5>Showing {this.state.tickerData.length} {this.props.match.params.name} cryptocurrencies</h5>
-				<div className="container u-full-width">		 
-					<CryptoTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
-					
-					<div>{rowItems}</div>
-				</div>
+					<table className="mui-table mui-table--bordered" id="table">
+						<IndustryTableMenu sortNumeric={this.sortNumeric} sortAlpha={this.sortAlpha} />
+						<tbody>
+						{rowItems}
+						</tbody>
+					</table>
 			</div>
 		)
 

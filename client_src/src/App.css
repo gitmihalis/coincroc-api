@@ -64,4 +64,13 @@ img.coin-avatar {
 	background-color: #3ae374;
 }
 
+i.brand-icon {
+	margin-bottom: -4px;
+	width: 17px;
+	height: 17px;
+	display: inline-block;
+	background: url('http://res.cloudinary.com/dattofkud/image/upload/v1524155762/brands/GitHub-Mark-Light-32px.png') no-repeat;
+	background-size: 17px;
+}
+
 

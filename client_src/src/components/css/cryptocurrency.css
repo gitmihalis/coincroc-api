@@ -1,3 +1,26 @@
+
+/* Cryptocurrency Table */
+table {
+	table-layout: fixed;
+}
+
+td.industry {
+	white-space: nowrap;
+	overflow:hidden;
+	font-size: .9em;
+}
+
+td.currency-name {
+	overflow: hidden;
+}
+
+td.industry ul {
+	padding: 0;
+	margin: 0;
+}
+
+
+/* Cryptoccurency Detail */
 ul.industry-list {
 	display: block;
 	list-style: square inside;
@@ -8,15 +31,6 @@ ul.industry-list {
 .industry-list li {
 	display: inline;
 	padding-right: .3em;
-	}
-
-td.industry {
-	white-space: nowrap;
-	overflow:hidden;
-}
-
-table {
-	table-layout: fixed;
 }
 
 li.industry a {
@@ -41,3 +55,5 @@ li.industry a {
 	margin: 1em .3em;
 	display: inline-block;
 }
+
+
