@@ -73,4 +73,15 @@ i.brand-icon {
 	background-size: 17px;
 }
 
+img#xray-brand {
+	height: 40px;
+	width: 40px;
+	margin: 5em;
+}
+
+.light {
+	background-color: #efefef;
+	color: #343434;
+}
+
 

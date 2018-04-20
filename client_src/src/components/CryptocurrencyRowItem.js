@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { $round, round, posNegStyle } from '../utils'
+import { $round, posNegStyle } from '../utils'
 import './css/cryptocurrency.css'
 
 /* 
@@ -44,7 +44,7 @@ const CryptocurrencyRowItem = (props) => {
   		</span>
   	</td>
   	<td className="industry">
-      <ul class="mui-list--inline">{industries}</ul>
+      <ul className="mui-list--inline">{industries}</ul>
 		</td>
 	</tr>
 	)

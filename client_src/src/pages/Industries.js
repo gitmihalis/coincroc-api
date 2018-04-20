@@ -34,9 +34,8 @@ class Industries extends Component{
     const coinCount = this.state.industries.length
     const industryItems = this.state.industries.map( (industry, i) => {
       return (
-      <Link to={`/industries/${industry.name}`}>
-        <div class="mui-panel industry"
-        key={industry.id}>
+      <Link to={`/industries/${industry.name}`} key={industry.id}>
+        <div className="mui-panel industry">
             {industry.name}
         </div>
         </Link>

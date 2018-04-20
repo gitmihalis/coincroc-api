@@ -42,5 +42,9 @@
   "Industry": {
     "dataSource": "db",
     "public": true
+  },
+  "Admin": {
+    "dataSource": "db",
+    "public": true
   }
 }

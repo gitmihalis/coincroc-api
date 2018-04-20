@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import Select from 'react-select'
+import cookie from 'react-cookies'
+import 'react-select/dist/react-select.css'
 
 
 
@@ -13,13 +14,16 @@ class AddIndustryToCryptocurrency extends Component{
 			cryptoOptions: '',
 			industryOptions: '',
 			selectedCrypto: '',
-			selectedIndustry: ''
+			selectedIndustry: '',
+			accessToken: '',
 		}
 	}
 
 	componentWillMount(){
+		const accessToken = cookie.load('access_token')
 		this.loadCryptocurrencyOptions()
 		this.loadIndustryOptions()
+		this.setState({accessToken})
 	}
 
 	loadIndustryOptions(){
@@ -85,7 +89,8 @@ class AddIndustryToCryptocurrency extends Component{
 		axios.request({
 			url: 'http://localhost:3000/api/cryptocurrencies/'+selectedCrypto.id,
 			method: 'patch',
-			data: patchData
+			data: patchData,
+			headers: {Authorization: this.state.accessToken}
 		})
 		.then(res => {
 			this.props.history.push('/')

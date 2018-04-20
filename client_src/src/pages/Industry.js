@@ -1,11 +1,5 @@
-/*
-[x] - show percent changes for crypto currencies
-[] - shoow totals
-[x] - display in row items...
-*/
 import React, { Component } from 'react'
 import axios from 'axios'
-import CryptoTableMenu from '../components/CryptoTableMenu'
 import IndustryTableMenu from '../components/IndustryTableMenu'
 import IndustryRowItem from '../components/IndustryRowItem'
 

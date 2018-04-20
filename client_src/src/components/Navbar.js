@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import './css/navbar.css'
 
@@ -9,7 +9,8 @@ export default function Navbar (props) {
       <div className="nav-wrapper">
         <nav className='greedy' id="page-top">
           <h1>
-          <img src="http://res.cloudinary.com/dattofkud/image/upload/v1524096719/cryptocat/cryptocroc/coincroc-brand.png" />
+          <img src="http://res.cloudinary.com/dattofkud/image/upload/v1524096719/cryptocat/cryptocroc/coincroc-brand.png"
+               alt="coincroc-brandb" />
           </h1>
           <ul className='links'>
             <li><Link to="/">Cryptocurrencies</Link></li>
@@ -22,8 +23,6 @@ export default function Navbar (props) {
         </nav>
       </div>
 		)
-	// }
-
 }
 
 
