@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
-import cookie from 'react-cookies'
+import cookie from 'react-cookies' // address this !NEXT
 import 'react-select/dist/react-select.css'
+import ErrorsList from '../components/ErrorsList'
 
 
 
@@ -16,6 +17,7 @@ class AddIndustryToCryptocurrency extends Component{
 			selectedCrypto: '',
 			selectedIndustry: '',
 			accessToken: '',
+			errors: ''
 		}
 	}
 
@@ -95,7 +97,12 @@ class AddIndustryToCryptocurrency extends Component{
 		.then(res => {
 			this.props.history.push('/')
 		})
-		.catch(err => console.error(err))
+		.catch(err => {
+			const response = err.response
+			this.setState({errors: response}, () => {
+				console.log(this.state.errors)
+			})
+		})
 	}	
 
 	onUnpair(){
@@ -159,18 +166,13 @@ class AddIndustryToCryptocurrency extends Component{
 				</div>
 			</div>
 
-			<div className="grid-x grid-padding-x grid-padding-y">
+			<div className="mui-row">
 				
-				<div className="cell small-4">
-					<button onClick={this.onUnpair.bind(this)} className="button alrt expanded">Unpair</button>
-				</div>						
-				
-				<div className="cell small-4"></div>
-				
-				<div className="cell small-4">
-					<button onClick={this.onPair.bind(this)} className="button expanded">Pair</button>
+				<div className="button-group">
+					<button onClick={this.onUnpair.bind(this)} className="mui-btn alrt mui-col-xs-6">Unpair</button>
+					<button onClick={this.onPair.bind(this)} className="mui-btn mui-col-xs-6">Pair</button>
 				</div>
-			
+				<ErrorsList errors={this.state.errors}/>
 			</div>
 			
 		</div>

@@ -93,7 +93,7 @@ export default class Cryptocurrency extends Component{
 						<div className="expanded button-group">
 						  <Link className="mui-btn"
 						  	to="/">Back
-						  </Link>				
+						  </Link>
 						</div>
 				</div>
 

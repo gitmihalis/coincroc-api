@@ -170,20 +170,20 @@ export default class Cryptocurrencies extends Component{
 				
 				<div className="button-group">
 				<button 
-				className="mui-btn mui-btn--raised"
+				className="mui-btn mui-btn--raised mui-col-sm-4"
 				onClick={this.handlePagePrev}
 				>Prev</button>
 
 
 				<button 
-				className="mui-btn mui-btn--raised"
+				className="mui-btn mui-btn--raised mui-col-sm-4"
 				onClick={() => { 
 					this.fetchTickerData(this.state.industries, 0, 0) 
 					document.documentElement.scrollTop = 0
 				}}>All</button>
 
 				<button 
-				className="mui-btn mui-btn--raised"
+				className="mui-btn mui-btn--raised mui-col-sm-4"
 				onClick={this.handlePageNext}
 				>Next</button>				
 				

@@ -1,0 +1,26 @@
+.errors-list p {
+	text-align: center;
+	margin: auto;
+	color: #7efff5;
+	text-shadow: 0 0 44px #7efff5;
+	text-decoration: underline overline;
+	text-decoration-color: #7d5fff;
+}
+
+.errors-list p:before {
+	content: '!'
+}
+
+.errors-list p:after {
+	content: '!';
+}
+
+.blink-me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: .3;
+  }
+}
