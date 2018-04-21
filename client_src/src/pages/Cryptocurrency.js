@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import Error from '../components/Error'
 
 
 export default class Cryptocurrency extends Component{
@@ -52,22 +53,21 @@ export default class Cryptocurrency extends Component{
 	render = () => {
 		const cryptocurrency = this.state.cryptocurrency ? this.state.cryptocurrency[0] : ''
 		const image = cryptocurrency ? cryptocurrency.image : 'https://cryptocomapre.com' + this.state.defaultImg
-		const industryList = 
-			cryptocurrency.industries ?
-				cryptocurrency.industries.map((industry) => {
-					return (
-		        <li className="industry"
-		        key={industry.id}>
-		          <Link to={`/industries/${industry.name}`}>
-		            {industry.name}
-		          </Link>
-		        </li>
-					)
-				}) 
-				:
-				[]
+		let industryList = []
+		if (cryptocurrency && cryptocurrency.industries) {
+			industryList = cryptocurrency.industries.map((industry) => {
+				return (
+	        <li className="industry"
+	        key={industry.id}>
+	          <Link to={`/industries/${industry.name}`}>
+	            {industry.name}
+	          </Link>
+	        </li>)
+			}) 
+		}
 
-		return(
+		if (cryptocurrency) { 
+			return(
 			<div className="cryptocurrency mui-container">
 				<div className="mui-row">
 			    <div className="mui-col-sm-4 mui--text-center">
@@ -99,6 +99,9 @@ export default class Cryptocurrency extends Component{
 
 			</div>
 		)
+		} else {
+			return (<Error error={this.state.price}/>)
+		}
 	}
 }
 

@@ -136,6 +136,23 @@ class AddIndustryToCryptocurrency extends Component{
 		})
 	}	
 
+	scrape() {
+		axios.request({
+			url: 'http://localhost:3000/api/cryptocurrencies/scrapecrypto',
+			method: 'get',
+			headers: {Authorization: this.state.accessToken},
+		})
+		.then(res => {
+			alert('scrapping')
+		})
+		.catch(err => {
+			const response = err.response
+			this.setState({errors: response}, () => {
+				console.error(this.state.errors.data.error.message)
+			})
+		})
+	}
+
 
 	render(){
 		const cryptoOptions = this.state.cryptoOptions || []
@@ -170,14 +187,20 @@ class AddIndustryToCryptocurrency extends Component{
 						</label>
 					</div>
 				</div>
-
+				<br />
 				<div className="mui-row">
-					<div className="mui-row button-group">
+					<div className="button-group">
 						<button onClick={this.onUnpair.bind(this)} className="mui-btn alrt mui-col-xs-6">Unpair</button>
 						<button onClick={this.onPair.bind(this)} className="mui-btn mui-col-xs-6">Pair</button>
 					</div>
-					<ErrorsList errors={this.state.errors}/>
 				</div>
+				<br/>
+				<div className="mui-row">
+					<div className="button-group">
+						<button onClick={this.scrape.bind(this)} className="mui-btn mui-col-xs-12">SCRAPE</button>
+					</div>
+				</div>
+				<ErrorsList errors={this.state.errors}/>
 		</div>
 		)
 	}

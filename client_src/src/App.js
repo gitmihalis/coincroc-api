@@ -9,9 +9,9 @@ import './App.css';
 const App = () => (
   <div>
 		<Navbar />
-	  <div className="mui-container">
+	  <main className="mui-container">
 	  	<Main />
-	  </div>
+	  </main>
 	  <div className="mui-container">
 		  <Footer />
 		 </div>

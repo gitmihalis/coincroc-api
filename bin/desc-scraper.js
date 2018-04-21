@@ -26,10 +26,9 @@ const cryptos = Cryptocurrency.find({
 	}, Promise.resolve([]))
 
 	series.then(newData => {
-		/* data is an array of symbol/descirption keyval pairs 
-		{ symbol: 'ETH', description: 'Ethereum */
-
-		// iterate and save each keyval pair in the series
+		/* data is an array of symbol/descirption keyval pairs:
+		{ symbol: 'ETH', description: 'Ethereum ...
+		Below we iterate and save each keyval pair in the series */
 		async.each(newData, function(d) {
 			updateCryptocurrency(
 				{symbol: d.symbol},

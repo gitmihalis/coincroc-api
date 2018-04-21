@@ -6,6 +6,10 @@ body {
 	background-color: #242124;
 }
 
+main {
+	margin: 2.06em auto;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	color: #fff;
 }
@@ -64,6 +68,10 @@ img.coin-avatar {
 	background-color: #3ae374;
 }
 
+.button-group a {
+	background-color: #fff200;
+}
+
 i.brand-icon {
 	margin-bottom: -4px;
 	width: 17px;
@@ -79,9 +87,13 @@ img#xray-brand {
 	margin: 5em;
 }
 
-.light {
-	background-color: #efefef;
-	color: #343434;
+.error {
+	margin: 3em auto;
+	padding: 10px;
+}
+
+.error h2 {
+	color: #ff3838;
 }
 
 

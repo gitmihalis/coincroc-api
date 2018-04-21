@@ -6,7 +6,7 @@ module.exports = function(Cryptocurrency) {
    * @param {Function(Error, object)} callback
    * returns a json object to work with
    */
-  Cryptocurrency.scanCryptos = function(callback) {
+  Cryptocurrency.scrapeCrypto = function(callback) {
     var https = require('https');
     var url = require('url');
     var body = '';
@@ -28,7 +28,7 @@ module.exports = function(Cryptocurrency) {
     });
   };
 
-  Cryptocurrency.afterRemote('scanCryptos', function(ctx, finalOut, next) {
+  Cryptocurrency.afterRemote('scrapeCrypto', function(ctx, finalOut, next) {
     var cryptocurrencies = JSON.parse(finalOut.cryptocompareResponse).Data;
 
     for (var key in cryptocurrencies) {
