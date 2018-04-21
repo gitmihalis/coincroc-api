@@ -25,7 +25,7 @@ const CryptoTableMenu = props => (
           24hr.change
         </a>
     	</th>
-    	<th className="two columns">
+    	<th className="industry mui--text-right">
         <span>Industry</span>
   	  </th>
     </tr>

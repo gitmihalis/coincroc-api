@@ -16,8 +16,8 @@ const CryptocurrencyRowItem = (props) => {
 	const industries = props.data.industries ?
 	  props.data.industries.map((industry, i) => {
 		  return (
-        <li className="industry-item" key={industry.id}>
-          <span className="bullet">&#9657;</span> {industry.name}
+        <li className="industry-item" key={industry.id+i}>
+          <span className="bullet">♮ </span>{industry.name}
         </li>
       )
 	  })

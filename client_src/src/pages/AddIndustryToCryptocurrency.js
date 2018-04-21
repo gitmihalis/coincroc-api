@@ -100,7 +100,7 @@ class AddIndustryToCryptocurrency extends Component{
 		.catch(err => {
 			const response = err.response
 			this.setState({errors: response}, () => {
-				console.log(this.state.errors)
+				console.error(this.state.errors)
 			})
 		})
 	}	
@@ -122,12 +122,18 @@ class AddIndustryToCryptocurrency extends Component{
 		axios.request({
 			url: 'http://localhost:3000/api/cryptocurrencies/'+selectedCrypto.id,
 			method: 'patch',
-			data: patchData
+			data: patchData,
+			headers: {Authorization: this.state.accessToken}
 		})
 		.then(res => {
 			this.props.history.push('/')
 		})
-		.catch(err => console.error(err))
+		.catch(err => {
+			const response = err.response
+			this.setState({errors: response}, () => {
+				console.error(this.state.errors.data.error.message)
+			})
+		})
 	}	
 
 
@@ -136,45 +142,42 @@ class AddIndustryToCryptocurrency extends Component{
 		const industryOptions = this.state.industryOptions || []
 
 		return(
-		<div className="grid-container">
+		<div className="mui-container">
+				<div className="mui-row">
+					<div id="select-cryptocurrency" className="mui-col-sm-6">
+						<label>Crypto:
+							<Select
+								value={this.state.selectedCrypto}
+								onChange={this.onSelectionChangeCrypto.bind(this)} 
+								name="cryptoOption"
+								options={cryptoOptions}
+								labelKey="name"
+								valueKey="id"
+							/>
+						</label>
+					</div>
 
-			<div className="grid-padding-x grid-padding-y grid-x">
-				<div id="select-cryptocurrency" className="medium-6 cell">
-					<label>Crypto:
-						<Select
-							value={this.state.selectedCrypto}
-							onChange={this.onSelectionChangeCrypto.bind(this)} 
-							name="cryptoOption"
-							options={cryptoOptions}
-							labelKey="name"
-							valueKey="id"
-						/>
-					</label>
+					<div id="select-industry" className="mui-col-sm-6">
+						<label>Industry:
+							<Select
+								name="industryOption"
+								value={this.state.selectedIndustry}
+								onChange={this.onSelectionChangeIndustry.bind(this)}
+								options={industryOptions}
+								labelKey="name"
+								valueKey="id"
+							/>
+						</label>
+					</div>
 				</div>
 
-				<div id="select-industry" className="medium-6 cell">
-					<label>Industry:
-						<Select
-							name="industryOption"
-							value={this.state.selectedIndustry}
-							onChange={this.onSelectionChangeIndustry.bind(this)}
-							options={industryOptions}
-							labelKey="name"
-							valueKey="id"
-						/>
-					</label>
+				<div className="mui-row">
+					<div className="mui-row button-group">
+						<button onClick={this.onUnpair.bind(this)} className="mui-btn alrt mui-col-xs-6">Unpair</button>
+						<button onClick={this.onPair.bind(this)} className="mui-btn mui-col-xs-6">Pair</button>
+					</div>
+					<ErrorsList errors={this.state.errors}/>
 				</div>
-			</div>
-
-			<div className="mui-row">
-				
-				<div className="button-group">
-					<button onClick={this.onUnpair.bind(this)} className="mui-btn alrt mui-col-xs-6">Unpair</button>
-					<button onClick={this.onPair.bind(this)} className="mui-btn mui-col-xs-6">Pair</button>
-				</div>
-				<ErrorsList errors={this.state.errors}/>
-			</div>
-			
 		</div>
 		)
 	}

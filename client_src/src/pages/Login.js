@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import cookie from 'react-cookies'
+import ErrorsList from '../components/ErrorsList'
+import '../components/css/forms.css'
 
 export default class Login extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			"email": '',
-			"password": '',
+			email: '',
+			password: '',
 			accessToken: '',
+			errors: '',
 		}
 	}
 
@@ -35,8 +38,6 @@ export default class Login extends Component {
 	 	}
 	 axios.post(url, payload)
 	 	.then(res => {
-			 console.log('got res: ', res)
-
 			 if(res.status === 200){
  				console.log("Login successfull") 
  				this.onLogin(res.data.id)
@@ -50,20 +51,24 @@ export default class Login extends Component {
 			 	console.log("Username does not exists")
 				alert("Username does not exist")
  	 })
- 	 .catch(function (error) {
- 		 console.log(error)
- 	 })
+		.catch(err => {
+			const response = err.response
+			this.setState({errors: response}, () => {
+				console.error(this.state.errors.data.error.message)
+			})
+		})
  }
 
  onLogin = (accessToken) => {
   this.setState({ accessToken })
   cookie.save('access_token', accessToken, { path: '/' })
+  window.location.href = '/industry-cryptocurrency'
 }
 
 
 	render(){
 		return (
-		<div className="mui-container light">
+		<div className="mui-container">
 			<h1>Login</h1>
 			<small>Well... go ahead and login then.</small>
 		
@@ -86,6 +91,7 @@ export default class Login extends Component {
 			  				onClick={this.handleSubmit}
 			  >Submit</button>
 		  </form>
+		  <ErrorsList errors={this.state.errors} />
 		</div>)
 	}
 }
