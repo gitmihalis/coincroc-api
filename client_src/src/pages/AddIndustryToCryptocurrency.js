@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Select from 'react-select'
-import cookie from 'react-cookies' // address this !NEXT
+import cookie from 'react-cookies' 
 import 'react-select/dist/react-select.css'
 import ErrorsList from '../components/ErrorsList'
 
