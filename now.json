@@ -1,6 +1,7 @@
 {
   "env": {
     "MONGODB_URI": "@coincroc-mongodb-uri",
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "ADMIN_PASS": "@admin-pass"
   }
 }
