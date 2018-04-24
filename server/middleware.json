@@ -3,6 +3,13 @@
     "loopback#favicon": {}
   },
   "initial": {
+    "cors": {
+      "params": {
+        "origin": true,
+        "credentials": true,
+        "maxAge": 86400
+      }
+    },    
     "compression": {},
     "cors": {
       "params": {
