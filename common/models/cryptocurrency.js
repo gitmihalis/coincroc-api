@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = function(Cryptocurrency) {
   /*
    * Fetches coinlist from the CryptoCompare API.
@@ -29,6 +28,10 @@ module.exports = function(Cryptocurrency) {
   };
 
   Cryptocurrency.afterRemote('scrapeCrypto', function(ctx, finalOut, next) {
+    // Hook up to mongo db
+    var app = require('../../server/server.js');
+    var db = app.dataSources.db;
+    var collection = db.connector.collection('Cryptocurrency');
     var cryptocurrencies = JSON.parse(finalOut.cryptocompareResponse).Data;
     var batch = [];
     for (var key in cryptocurrencies) {
@@ -39,6 +42,8 @@ module.exports = function(Cryptocurrency) {
       batch.push(newCrypto);
     };
 
+    collection.insertMany(batch, {multi: true});
+/* The following code causes the mongodb cursor to timeout and crash the app :(
     for (var i = 0; i < batch.length; i++) {
       setTimeout(function(x) {
         return function() {
@@ -55,6 +60,6 @@ module.exports = function(Cryptocurrency) {
           );
         };
       }(i), i * 100);
-    }
+    } */
   });
 };
