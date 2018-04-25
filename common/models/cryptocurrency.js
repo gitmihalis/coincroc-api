@@ -30,26 +30,31 @@ module.exports = function(Cryptocurrency) {
 
   Cryptocurrency.afterRemote('scrapeCrypto', function(ctx, finalOut, next) {
     var cryptocurrencies = JSON.parse(finalOut.cryptocompareResponse).Data;
-
+    var batch = [];
     for (var key in cryptocurrencies) {
       var symbol = cryptocurrencies[key].Symbol;
       var name = cryptocurrencies[key].CoinName;
       var image = cryptocurrencies[key].ImageUrl;
       var newCrypto = {symbol, name, image};
+      batch.push(newCrypto);
+    };
 
-      Cryptocurrency.findOrCreate(
-        {where:
-          {symbol: symbol},
-        },
-        newCrypto,
-        function(err, instance, created) {
-          if (err) return console.log(err);
-          return console.log(instance);
-        }
-      );
+    for (var i = 0; i < batch.length; i++) {
+      setTimeout(function(x) {
+        return function() {
+          Cryptocurrency.findOrCreate(
+            {where:
+              {symbol: batch[x].symbol},
+            },
+            batch[x],
+            function(err, instance, created) {
+              if (err) return console.log(err);
+              console.log(instance);
+              console.log(created);
+            }
+          );
+        };
+      }(i), i * 100);
     }
-
-    // console.log(result);
-    next();
   });
 };

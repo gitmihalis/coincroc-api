@@ -31,14 +31,3 @@ request.get({uri: address}, (err, res, body) => {
 
 	}
 })
-
-// process.exit()
-
-
-	
-
-
-
-
-
-
