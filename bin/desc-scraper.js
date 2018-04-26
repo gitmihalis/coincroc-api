@@ -1,19 +1,18 @@
 const Nightmare = require('nightmare')
-const async = require('async')
 const path = require('path')
 const app = require(path.resolve(__dirname, '../server/server'))
-const db = app.dataSources.db	
+const db = app.dataSources.db
 const Cryptocurrency = app.models.Cryptocurrency
 
 /* Query the DS for crytpocurrencies to use for the API requests
 	<!> there was a bug when commiting 2600+ files to memory so for now
-	we paginate the results of the find method and save in smaller 
+	we paginate the results of the find method and save in smaller
 	batches </!> */
-const SKIP = 2500
+const SKIP = 500
 const cryptos = Cryptocurrency.find({
-		order: 'symbol DESC', 
-		limit: 500,
-		skip: SKIP 
+		order: 'symbol DESC',
+		limit: 1000,
+		skip: SKIP
 	}, function(err, collection) {
 	if (err) throw err;
 
@@ -29,13 +28,13 @@ const cryptos = Cryptocurrency.find({
 		/* data is an array of symbol/descirption keyval pairs:
 		{ symbol: 'ETH', description: 'Ethereum ...
 		Below we iterate and save each keyval pair in the series */
-		async.each(newData, function(d) {
+		newData.forEach(function(el) {
 			updateCryptocurrency(
-				{symbol: d.symbol},
-				{fullDesc: d.description}
+				{symbol: el.symbol},
+				{fullDesc: el.description}
 			)
 		}, function(err) {
-			console.log(err)
+			if (err) throw err;
 		})
 		console.log('finished save, last start from ', SKIP)
 		db.disconnect()
@@ -43,7 +42,7 @@ const cryptos = Cryptocurrency.find({
 	.catch(err => console.log('error saving new Data ', err))
 })
 
-/* TODO inquire into why JS doesn't wait for previous the previous promise to resolve when 
+/* TODO inquire into why JS doesn't wait for previous the previous promise to resolve when
  the `then` funcition doesn't wrap it's content in a function */
 async function fetchDescription(symbol) {
 	console.log(`Now fetching description for ${symbol}`)
@@ -71,10 +70,9 @@ async function fetchDescription(symbol) {
 function updateCryptocurrency(whereCondition, newData ) {
 	Cryptocurrency.updateAll(whereCondition, newData, function(err, instance) {
 		if (err) throw err;
-
-		console.log('instance of Cryptocurrency was created: %s', JSON.stringify(instance))
+		console.log('' + JSON.stringify(newData) +' was created!')
 	})
-}	
+}
 
 
 
