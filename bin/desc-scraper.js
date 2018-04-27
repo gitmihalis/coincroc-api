@@ -8,10 +8,10 @@ const Cryptocurrency = app.models.Cryptocurrency
 	<!> there was a bug when commiting 2600+ files to memory so for now
 	we paginate the results of the find method and save in smaller
 	batches </!> */
-const SKIP = 500
+const SKIP = 2100
 const cryptos = Cryptocurrency.find({
 		order: 'symbol DESC',
-		limit: 1000,
+		limit: 200,
 		skip: SKIP
 	}, function(err, collection) {
 	if (err) throw err;
@@ -25,19 +25,19 @@ const cryptos = Cryptocurrency.find({
 	}, Promise.resolve([]))
 
 	series.then(newData => {
+    const max = newData.length;
 		/* data is an array of symbol/descirption keyval pairs:
 		{ symbol: 'ETH', description: 'Ethereum ...
 		Below we iterate and save each keyval pair in the series */
-		newData.forEach(function(el) {
+		newData.forEach(function(item, i) {
 			updateCryptocurrency(
-				{symbol: el.symbol},
-				{fullDesc: el.description}
+				{symbol: item.symbol},
+				{fullDesc: item.description}
 			)
-		}, function(err) {
-			if (err) throw err;
-		})
-		console.log('finished save, last start from ', SKIP)
-		db.disconnect()
+    });
+
+    console.log('successfully saved data')
+    db.disconnect()
 	})
 	.catch(err => console.log('error saving new Data ', err))
 })
@@ -49,9 +49,9 @@ async function fetchDescription(symbol) {
 	const nightmare = Nightmare({ show: false })
 
 	try {
-		symbol = String(symbol).toUpperCase()
+		let sym = String(symbol).toUpperCase()
 		const result = await nightmare
-	  	.goto(`https://www.cryptocompare.com/coins/${symbol}/overview`)
+	  	.goto(`https://www.cryptocompare.com/coins/${sym}/overview`)
 	  	.wait('.coin-description')
 	  	.evaluate(() => {
 	  		return (
