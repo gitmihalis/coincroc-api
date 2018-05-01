@@ -17,6 +17,7 @@
     "cheerio": "^1.0.0-rc.2",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "dotenv": "^5.0.1",
     "helmet": "^3.10.0",
     "loopback": "^3.0.0",
     "loopback-boot": "^2.6.5",
