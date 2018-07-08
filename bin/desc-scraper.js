@@ -8,7 +8,7 @@ const Cryptocurrency = app.models.Cryptocurrency
 	<!> there was a bug when commiting 2600+ files to memory so for now
 	we paginate the results of the find method and save in smaller
 	batches </!> */
-const SKIP = 2100
+const SKIP = 2100 // TODO: make this an argument
 const cryptos = Cryptocurrency.find({
 		order: 'symbol DESC',
 		limit: 200,
@@ -19,7 +19,7 @@ const cryptos = Cryptocurrency.find({
 	const series = collection.reduce(async (queue, item) => {
 		const data = await queue
 		/* If the symbol contains an asterisk, cryptocompare will not find the page overview
-		 so we can disregard it and save the scaper 404 timeouts */
+		 so we can disregard it and avoid 404 timeouts */
 		if (!item.symbol.match(/\*/)) data.push(await fetchDescription(item.symbol))
 		return data
 	}, Promise.resolve([]))
